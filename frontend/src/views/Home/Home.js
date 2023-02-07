@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <>
       <Carousel />
-      <PageLayout container isAsync={false}></PageLayout>
+      <PageLayout container isAsync={false}/>
     </>
   )
 }
