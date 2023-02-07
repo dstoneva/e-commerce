@@ -2,7 +2,7 @@ import { Mail, Phone } from '@mui/icons-material'
 import { Box, CircularProgress, Container, Divider, Link, Typography } from '@mui/material'
 import { ErrorBoundary } from 'components'
 import { Outlet } from 'react-router-dom/dist'
-import { NavigationBar } from './components'
+import { Footer, NavigationBar } from './components'
 
 const Main = ({ isSuspense }) => {
   return (
@@ -53,7 +53,9 @@ const Main = ({ isSuspense }) => {
       </Box>
       <NavigationBar />
       {isSuspense ? <CircularProgress /> : <Outlet />}
+      <Footer/>
     </ErrorBoundary>
+
   )
 }
 
