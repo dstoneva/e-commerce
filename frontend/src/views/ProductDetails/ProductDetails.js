@@ -10,13 +10,13 @@ const ProductDetails = () => {
 
   return (
     <PageLayout error={error} data={product}>
-      <Container
-        sx={{
-          mt: 5,
-        }}
-      >
-        <ProductDetailsCard product={product} />
-      </Container>
+          <Container
+            sx={{
+              mt: 5,
+            }}
+          >
+            <ProductDetailsCard product={product} />
+          </Container>
     </PageLayout>
   )
 }
