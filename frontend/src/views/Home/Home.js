@@ -1,12 +1,13 @@
 import { Grid } from '@mui/material'
 import { PageLayout } from 'layouts/Main/components'
-import { Carousel, NewArrivals } from './components'
+import { Carousel, NewArrivals, TopCategories } from './components'
 
 const Home = () => {
   return (
     <>
       <Carousel />
       <PageLayout container isAsync={false}>
+        <TopCategories />
         <Grid container spacing={4} sx={{ my: 1 }}>
           <Grid item md={12} xs={12}>
             <NewArrivals />
