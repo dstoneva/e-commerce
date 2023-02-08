@@ -3,15 +3,20 @@ import { PageLayout } from 'layouts/Main/components'
 import useSWR from 'swr'
 import { useState } from 'react'
 import { ProductCard } from 'components'
+import Headline from '../Headline'
+import WidgetsIcon from '@mui/icons-material/Widgets'
 
 const ProductList = () => {
   const [page, setPage] = useState(1)
-  const [productsPerPage, setProductsPerPage] = useState(10)
+  const [productsPerPage, setProductsPerPage] = useState(4)
 
   const { data: products, error } = useSWR(`/products?page=${page}&productsPerPage=${productsPerPage}`)
 
   return (
     <PageLayout error={error} data={products}>
+      <Headline icon={<WidgetsIcon color="primary" />} sx={{ marginTop: 4 }}>
+        More For You
+      </Headline>
       <Grid container spacing={3}>
         {products?.result.map((product) => (
           <Grid item xs={12} sm={4} md={3} key={product._id}>
@@ -40,9 +45,9 @@ const ProductList = () => {
               setProductsPerPage(e.target.value)
             }}
           >
-            <MenuItem value={10}>10</MenuItem>
-            <MenuItem value={20}>20</MenuItem>
-            <MenuItem value={30}>30</MenuItem>
+            <MenuItem value={4}>4</MenuItem>
+            <MenuItem value={8}>8</MenuItem>
+            <MenuItem value={16}>16</MenuItem>
           </TextField>
         </Box>
       </Box>
