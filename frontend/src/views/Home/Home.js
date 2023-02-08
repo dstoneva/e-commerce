@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import { PageLayout } from 'layouts/Main/components'
-import { Carousel, NewArrivals, TopCategories, TopRatings, FeaturedBrands, ProductList } from './components'
+import { Carousel, NewArrivals, TopCategories, TopRatings, FeaturedBrands, ProductList, Delivery } from './components'
 
 const Home = () => {
   return (
@@ -20,6 +20,9 @@ const Home = () => {
           </Grid>
           <Grid item md={12} xs={12}>
             <ProductList />
+          </Grid>
+          <Grid item lg={12} xl={12}>
+            <Delivery />
           </Grid>
         </Grid>
       </PageLayout>
