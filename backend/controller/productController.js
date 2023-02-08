@@ -9,7 +9,7 @@ const getProducts = asyncHandler(async (req, res) => {
   const page = +pageFromParams >= 1 ? +pageFromParams - 1 : 0
 
   const products = await Product.find()
-    .sort({ createdAt: 'desc' })
+    .sort({ id: 'asc' })
     .limit(+productsPerPage)
     .skip(+productsPerPage * page)
     .select('-id')

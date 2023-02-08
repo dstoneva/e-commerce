@@ -8,7 +8,7 @@ import WidgetsIcon from '@mui/icons-material/Widgets'
 
 const ProductList = () => {
   const [page, setPage] = useState(1)
-  const [productsPerPage, setProductsPerPage] = useState(4)
+  const [productsPerPage, setProductsPerPage] = useState(8)
 
   const { data: products, error } = useSWR(`/products?page=${page}&productsPerPage=${productsPerPage}`)
 
