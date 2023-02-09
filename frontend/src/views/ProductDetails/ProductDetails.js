@@ -2,7 +2,7 @@ import { Container } from '@mui/material'
 import { PageLayout } from 'layouts/Main/components'
 import { useParams } from 'react-router-dom'
 import useSWR from 'swr'
-import { ProductDetailsCard } from './components'
+import { AdditionalInfo, ProductDetailsCard } from './components'
 
 const ProductDetails = () => {
   const params = useParams()
@@ -10,13 +10,14 @@ const ProductDetails = () => {
 
   return (
     <PageLayout error={error} data={product}>
-          <Container
-            sx={{
-              mt: 5,
-            }}
-          >
-            <ProductDetailsCard product={product} />
-          </Container>
+      <Container
+        sx={{
+          mt: 5,
+        }}
+      >
+        <ProductDetailsCard product={product} />
+        <AdditionalInfo product={product} />
+      </Container>
     </PageLayout>
   )
 }
