@@ -1,12 +1,13 @@
 import { Box, Tabs, Tab } from '@mui/material'
 import { useState } from 'react'
 import TabContext from '@mui/lab/TabContext'
-import { Description } from './components'
+import { Description, Comment } from './components'
+import { DUMMY_REVIEWS } from './data'
 
 const AdditionalInfo = ({ product }) => {
   const tabsData = [
     { title: 'Description', content: <Description product={product} />, key: 1 },
-    { title: 'Reviews', content: 'item two', key: 2 },
+    { title: 'Reviews', content: <Comment reviews={DUMMY_REVIEWS} />, key: 2 },
   ]
 
   const [value, setValue] = useState('0')
