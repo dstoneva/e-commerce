@@ -1,7 +1,7 @@
-import { Box, Button, Step, StepLabel, Stepper,  Grid } from '@mui/material'
+import { Box, Button, Step, StepLabel, Stepper, Grid } from '@mui/material'
 import { useFormik } from 'formik'
 import { PageLayout } from 'layouts/Main/components'
-import {  useState } from 'react'
+import { useState } from 'react'
 import Cart from 'views/Cart'
 import { API_URL } from 'config'
 import axios from 'axios'
@@ -11,6 +11,7 @@ import { useError } from 'utils/hooks'
 import { useSnackbar } from 'notistack'
 import { PageURLs } from 'Routes'
 import { useNavigate } from 'react-router-dom'
+import { Shipping } from './components'
 
 const Checkout = () => {
   const { setError } = useError()
@@ -63,7 +64,7 @@ const Checkout = () => {
 
   const steps = [
     { label: 'Cart', component: <Cart /> },
-    { label: 'Shipping', component: '' },
+    { label: 'Shipping', component: <Shipping formik={formik} /> },
     { label: 'Payment', component: '' },
   ]
 
