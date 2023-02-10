@@ -11,6 +11,7 @@ const NotFoundView = lazy(() => import('views/NotFound'))
 const RegisterView = lazy(() => import('views/Register'))
 const ProductDetailsView = lazy(() => import('views/ProductDetails'))
 const CartView = lazy(() => import('views/Cart'))
+const CheckoutView = lazy(() => import('views/Checkout'))
 
 export const PageURLs = {
   Login: '/login',
@@ -18,6 +19,7 @@ export const PageURLs = {
   Register: '/register',
   ProductDetails: '/products/:productId',
   Cart: '/cart',
+  Checkout: '/checkout',
 }
 
 const RoutesComponent = () => {
@@ -58,6 +60,14 @@ const RoutesComponent = () => {
             element={
               <PrivateRoute>
                 <CartView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={PageURLs.Checkout}
+            element={
+              <PrivateRoute>
+                <CheckoutView />
               </PrivateRoute>
             }
           />
