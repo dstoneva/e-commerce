@@ -11,15 +11,23 @@ import {
   Chip,
   IconButton,
 } from '@mui/material'
-import DisplayCurrency from 'components/DisplayCurrency'
 import { useCart } from 'core'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import { DEFAULT_LOCALIZATION } from 'config'
 import { FavoriteBorder, RemoveRedEye } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { ProductDialog, DisplayCurrency } from 'components'
 
 const ProductCard = ({ product, center = false }) => {
   const { addToCart, itemIds, removeFromCart, getQuantity } = useCart()
+  const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleOpen = () => {
+    setIsOpen(!isOpen)
+  }
 
   return (
     <Card
@@ -44,7 +52,8 @@ const ProductCard = ({ product, center = false }) => {
         }}
         id="hidden-menu-fav-eye"
       >
-        <IconButton>
+        <ProductDialog isDialogOpened={isOpen} product={product} handleCloseDialog={() => setIsOpen(false)} />
+        <IconButton onClick={() => handleOpen()}>
           <RemoveRedEye fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.26)' }} />
         </IconButton>
         <IconButton>
@@ -61,7 +70,14 @@ const ProductCard = ({ product, center = false }) => {
           )} off`}
         />
       )}
-      <CardMedia component="img" height={300} image={product.thumbnail} alt={product.title} />
+      <CardMedia
+        sx={{ cursor: 'pointer' }}
+        component="img"
+        height={300}
+        image={product.thumbnail}
+        alt={product.title}
+        onClick={() => navigate(`/products/${product._id}`)}
+      />
       <Box display="flex" p={2}>
         <CardContent sx={{ width: '100%', p: 0 }}>
           <Tooltip title={product.title} placement="bottom-start">
