@@ -5,6 +5,7 @@ import useSWR from 'swr'
 import dateFormatter from 'utils/helpers/dateFormatter'
 import { Headline } from 'views/Home/components'
 import LocalMallIcon from '@mui/icons-material/LocalMall'
+import { OrderItem } from './components'
 
 const Order = () => {
   const { orderId } = useParams()
@@ -31,6 +32,9 @@ const Order = () => {
               <Typography>Placed on: {dateFormatter(data?.createdAt)}</Typography>
             </Box>
             <Box padding={1}>
+              {data?.cart?.map((item, i) => (
+                <OrderItem product={item} key={i} />
+              ))}
             </Box>
           </Paper>
         </Grid>
