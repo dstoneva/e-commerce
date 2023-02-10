@@ -27,21 +27,8 @@ const bannerSlide = (
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut
             convalliss.
           </Typography>
-          <Button
-            sx={{
-              bgcolor: (theme) => theme.palette.primary[500],
-              '&:hover': {
-                bgcolor: (theme) => theme.palette.primary[700],
-              },
-              color: 'white',
-              minWidth: 64,
-              width: 154,
-              height: 44,
-            }}
-          >
-            <Typography variant="body1" sx={{ fontWeight: 500 }}>
-              Shop Now
-            </Typography>
+          <Button variant="contained" color="primary" sx={{ minWidth: 64, width: 154, height: 44 }}>
+            Shop Now
           </Button>
         </Box>
       </Grid>
