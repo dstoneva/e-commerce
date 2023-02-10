@@ -10,12 +10,14 @@ const LoginView = lazy(() => import('views/Login'))
 const NotFoundView = lazy(() => import('views/NotFound'))
 const RegisterView = lazy(() => import('views/Register'))
 const ProductDetailsView = lazy(() => import('views/ProductDetails'))
+const CartView = lazy(() => import('views/Cart'))
 
 export const PageURLs = {
   Login: '/login',
   NotFound: '/404',
   Register: '/register',
-  ProductDetails: '/products/:productId'
+  ProductDetails: '/products/:productId',
+  Cart: '/cart',
 }
 
 const RoutesComponent = () => {
@@ -43,11 +45,19 @@ const RoutesComponent = () => {
               </PrivateRoute>
             }
           />
-           <Route
+          <Route
             path={PageURLs.ProductDetails}
             element={
               <PrivateRoute>
                 <ProductDetailsView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={PageURLs.Cart}
+            element={
+              <PrivateRoute>
+                <CartView />
               </PrivateRoute>
             }
           />
