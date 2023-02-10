@@ -38,12 +38,12 @@ const QuickView = ({ product }) => {
               <Rating value={product.rating} readOnly size="small" />
               <Typography variant="subtitle">(50)</Typography>
             </Box>
-            <Box marginBottom={2}>
+            <Box sx={{my: 2}}>
               <Typography variant="subtitle" color={(theme) => theme.palette.grey[600]}>
                 {product.description}
               </Typography>
             </Box>
-            <Divider sx={{ mb: 2 }} />
+            <Divider sx={{ mb: 1.5 }} />
             <Box display="flex" gap={3}>
               {itemIds.includes(product._id) ? (
                 <>
