@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Dialog, DialogTitle, DialogContent, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import { QuickView } from './components'
 
 export default function ProductDialog({ isDialogOpened, handleCloseDialog, product }) {
   const handleClose = () => {
@@ -24,7 +25,9 @@ export default function ProductDialog({ isDialogOpened, handleCloseDialog, produ
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent></DialogContent>
+        <DialogContent>
+          <QuickView product={product} />
+        </DialogContent>
       </Dialog>
     </Fragment>
   )
