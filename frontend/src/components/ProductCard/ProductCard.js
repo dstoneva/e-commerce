@@ -14,7 +14,7 @@ import {
 import { useCart } from 'core'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import InventoryIcon from '@mui/icons-material/Inventory'
+import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import { DEFAULT_LOCALIZATION } from 'config'
 import { FavoriteBorder, RemoveRedEye } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
@@ -136,9 +136,9 @@ const ProductCard = ({ product, center = false }) => {
               <AddIcon fontSize="small" />
             </Button>
           ) : (
-            <Tooltip title='Out Of Stock'>
+            <Tooltip title="Out Of Stock">
               <Button color="primary" variant="outlined" sx={{ minWidth: 0, p: '3px', m: '0 !important' }}>
-                <InventoryIcon fontSize="small" />
+                <LocalShippingIcon fontSize="small" />
               </Button>
             </Tooltip>
           )}
