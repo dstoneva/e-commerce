@@ -5,7 +5,7 @@ import useSWR from 'swr'
 import dateFormatter from 'utils/helpers/dateFormatter'
 import { Headline } from 'views/Home/components'
 import LocalMallIcon from '@mui/icons-material/LocalMall'
-import { OrderItem } from './components'
+import { OrderItem, Summary } from './components'
 
 const Order = () => {
   const { orderId } = useParams()
@@ -47,6 +47,7 @@ const Order = () => {
               {data?.address?.country}, {data?.address?.zip}, {data?.address?.address1}
             </Typography>
           </Paper>
+          <Summary cart={data?.cart} payment={data?.payment?.type} />
         </Grid>
       </Grid>
     </PageLayout>
