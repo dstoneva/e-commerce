@@ -28,6 +28,9 @@ const QuickView = ({ product }) => {
               {product.title}
             </Typography>
             <Typography variant="subtitle">CATEGORY: {product.category}</Typography>
+            <Typography variant="subtitle">
+              Brand: <b>{product.brand}</b>
+            </Typography>
             <Typography fontWeight="bold" color="primary" fontSize={25}>
               <DisplayCurrency number={getFinalPrice(product)} />
             </Typography>
