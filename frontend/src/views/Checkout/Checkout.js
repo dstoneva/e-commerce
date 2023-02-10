@@ -11,7 +11,7 @@ import { useError } from 'utils/hooks'
 import { useSnackbar } from 'notistack'
 import { PageURLs } from 'Routes'
 import { useNavigate } from 'react-router-dom'
-import { Shipping } from './components'
+import { Shipping, Payment } from './components'
 
 const Checkout = () => {
   const { setError } = useError()
@@ -65,7 +65,7 @@ const Checkout = () => {
   const steps = [
     { label: 'Cart', component: <Cart /> },
     { label: 'Shipping', component: <Shipping formik={formik} /> },
-    { label: 'Payment', component: '' },
+    { label: 'Payment', component: <Payment formik={formik} /> },
   ]
 
   const handleNext = () => {
