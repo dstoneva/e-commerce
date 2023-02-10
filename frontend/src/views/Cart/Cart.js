@@ -2,9 +2,11 @@ import { Grid, useMediaQuery } from '@mui/material'
 import { useCart } from 'core'
 import { PageLayout } from 'layouts/Main/components'
 import { CartProduct } from './components'
-import { ProductCard } from 'components'
+import { ProductCard, Subtotal, SideMenu } from 'components'
+import { useLocation } from 'react-router-dom'
 
 const Cart = () => {
+  const location = useLocation()
   const isMatch = useMediaQuery((theme) => theme.breakpoints.down('sm'))
   const { cart } = useCart()
   return (
@@ -19,7 +21,9 @@ const Cart = () => {
             )
           )}
         </Grid>
-        <Grid item xs={12} md={4} lg={4}></Grid>
+        <Grid item xs={12} md={4} lg={4}>
+          {location.pathname === '/cart' ? <SideMenu /> : <Subtotal />}
+        </Grid>
       </Grid>
     </PageLayout>
   )
