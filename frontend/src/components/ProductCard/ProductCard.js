@@ -14,6 +14,7 @@ import {
 import { useCart } from 'core'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import InventoryIcon from '@mui/icons-material/Inventory'
 import { DEFAULT_LOCALIZATION } from 'config'
 import { FavoriteBorder, RemoveRedEye } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
@@ -54,7 +55,7 @@ const ProductCard = ({ product, center = false }) => {
       >
         <ProductDialog isDialogOpened={isOpen} product={product} handleCloseDialog={() => setIsOpen(false)} />
         <IconButton onClick={() => handleOpen()}>
-          <RemoveRedEye fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.26)' }} />
+          <RemoveRedEye fontSize="small" sx={{ color: 'green' }} />
         </IconButton>
         <IconButton>
           <FavoriteBorder fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.26)' }} />
@@ -125,14 +126,22 @@ const ProductCard = ({ product, center = false }) => {
               <Typography fontWeight={600}>{getQuantity(product._id)}</Typography>
             </>
           )}
-          <Button
-            color="primary"
-            onClick={() => addToCart(product)}
-            variant="outlined"
-            sx={{ minWidth: 0, p: '3px', m: '0 !important' }}
-          >
-            <AddIcon fontSize="small" />
-          </Button>
+          {product.stock > 0 ? (
+            <Button
+              color="primary"
+              onClick={() => addToCart(product)}
+              variant="outlined"
+              sx={{ minWidth: 0, p: '3px', m: '0 !important' }}
+            >
+              <AddIcon fontSize="small" />
+            </Button>
+          ) : (
+            <Tooltip title='Out Of Stock'>
+              <Button color="primary" variant="outlined" sx={{ minWidth: 0, p: '3px', m: '0 !important' }}>
+                <InventoryIcon fontSize="small" />
+              </Button>
+            </Tooltip>
+          )}
         </CardActions>
       </Box>
     </Card>
