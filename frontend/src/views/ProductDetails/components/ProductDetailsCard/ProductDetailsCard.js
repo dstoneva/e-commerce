@@ -106,13 +106,6 @@ const ProductDetailsCard = ({ product }) => {
                 onClick={() => addToCart(product)}
                 variant="contained"
                 color="primary"
-                sx={{
-                  color: 'white',
-                  width: 150,
-                  ':hover': {
-                    bgcolor: 'primary.dark',
-                  },
-                }}
               >
                 {product.stock > 0 ? 'Add to cart' : 'Out of stock'}
               </Button>
