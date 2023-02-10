@@ -25,7 +25,7 @@ export default function ProductDialog({ isDialogOpened, handleCloseDialog, produ
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{my: 1}}>
           <QuickView product={product} />
         </DialogContent>
       </Dialog>
