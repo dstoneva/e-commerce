@@ -43,6 +43,7 @@ const Register = () => {
       <Divider sx={{ my: 2 }} />
       <form onSubmit={formik.handleSubmit}>
         <TextField
+          fullWidth
           name="name"
           label="Full name"
           value={formik.values.name}
@@ -52,6 +53,7 @@ const Register = () => {
           sx={{ mb: 1 }}
         />
         <TextField
+          fullWidth
           name="email"
           label="Email"
           value={formik.values.email}
@@ -61,6 +63,7 @@ const Register = () => {
           sx={{ mb: 1 }}
         />
         <TextField
+          fullWidth
           name="password"
           label="Password"
           type="password"
@@ -71,6 +74,7 @@ const Register = () => {
           sx={{ mb: 1 }}
         />
         <TextField
+          fullWidth
           name="passwordConfirmation"
           label="Confirm password"
           type="password"
@@ -81,6 +85,7 @@ const Register = () => {
           sx={{ mb: 1 }}
         />
         <TextField
+          fullWidth
           name="phone"
           label="Phone"
           value={formik.values.phone}
