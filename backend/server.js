@@ -6,7 +6,7 @@ require('colors')
 require('dotenv').config()
 
 connectDatabase()
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 8080
 const API_ROUTE = process.env.API_ROUTE || '/api'
 
 const app = express()
