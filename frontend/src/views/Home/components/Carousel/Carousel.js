@@ -5,6 +5,8 @@ import { Container } from '@mui/system'
 import { Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Grid, Typography, Box, Button } from '@mui/material'
+import 'swiper/swiper-bundle.min.css'
+import 'swiper/swiper.min.css'
 
 const bannerSlide = (
   <SwiperSlide>
