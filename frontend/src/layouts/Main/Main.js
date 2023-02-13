@@ -21,9 +21,10 @@ const Main = ({ isSuspense }) => {
             </Typography>
             <Typography
               component="div"
-              sx={{ display: 'flex', alignItems: 'center' }}
+              sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
               variant="overline"
               color="background.default"
+              onClick={() => (window.location = 'mailto:support@email.com')}
             >
               <Mail sx={{ mr: 1 }} fontSize="small" />
               support@email.com
@@ -53,9 +54,8 @@ const Main = ({ isSuspense }) => {
       </Box>
       <NavigationBar />
       {isSuspense ? <CircularProgress /> : <Outlet />}
-      <Footer/>
+      <Footer />
     </ErrorBoundary>
-
   )
 }
 
