@@ -42,6 +42,16 @@ const LiveSearch = ({ toggleDrawer, setState }) => {
     }
   }
 
+  const handleClick = (id) => {
+    navigate(`products/${id}`)
+    setOpen(false)
+    setInputValue('')
+    if (setState && toggleDrawer) {
+      setState(false)
+      toggleDrawer(false)
+    }
+  }
+
   return (
     <Stack
       spacing={2}
@@ -77,12 +87,7 @@ const LiveSearch = ({ toggleDrawer, setState }) => {
         isOptionEqualToValue={(option, value) => option?.title === value.title}
         renderOption={(props, jsonResults) => {
           return (
-            <Box
-              component="li"
-              {...props}
-              key={jsonResults?._id}
-              onClick={() => navigate(`products/${jsonResults?._id}`)}
-            >
+            <Box component="li" {...props} key={jsonResults?._id} onClick={() => handleClick(jsonResults?._id)}>
               {jsonResults?.title}
             </Box>
           )
