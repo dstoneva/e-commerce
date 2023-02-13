@@ -60,7 +60,7 @@ const LiveSearch = () => {
         disableClearable
         id="free-solo-live-search"
         getOptionLabel={(jsonResults) =>
-          jsonResults?.title.toLowerCase().trim() ? `${jsonResults?.title.toLowerCase().trim()}` : ''
+          jsonResults?.title?.toLowerCase().trim() ? `${jsonResults?.title.toLowerCase().trim()}` : ''
         }
         options={jsonResults}
         isOptionEqualToValue={(option, value) => option?.title === value.title}
