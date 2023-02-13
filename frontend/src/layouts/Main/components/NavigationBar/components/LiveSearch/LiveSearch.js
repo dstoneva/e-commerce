@@ -77,7 +77,12 @@ const LiveSearch = ({ toggleDrawer, setState }) => {
         isOptionEqualToValue={(option, value) => option?.title === value.title}
         renderOption={(props, jsonResults) => {
           return (
-            <Box component="li" {...props} key={jsonResults?._id}>
+            <Box
+              component="li"
+              {...props}
+              key={jsonResults?._id}
+              onClick={() => navigate(`products/${jsonResults?._id}`)}
+            >
               {jsonResults?.title}
             </Box>
           )
