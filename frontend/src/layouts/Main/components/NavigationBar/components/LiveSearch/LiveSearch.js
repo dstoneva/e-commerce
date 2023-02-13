@@ -6,7 +6,7 @@ import { API_URL } from 'config'
 import axios from 'axios'
 import { useError } from 'utils/hooks'
 
-const LiveSearch = () => {
+const LiveSearch = ({ toggleDrawer, setState }) => {
   const { setError } = useError()
   const [open, setOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
@@ -35,11 +35,22 @@ const LiveSearch = () => {
       }
       setOpen(false)
       setInputValue('')
+      if (setState && toggleDrawer) {
+        setState(false)
+        toggleDrawer(false)
+      }
     }
   }
 
   return (
-    <Stack spacing={2} sx={{ width: 480 }}>
+    <Stack
+      spacing={2}
+      sx={{
+        flex: '1 1 0',
+        maxWidth: '670px',
+        mx: 'auto',
+      }}
+    >
       <Autocomplete
         freeSolo
         open={open}
@@ -73,8 +84,8 @@ const LiveSearch = () => {
         }}
         renderInput={(params) => (
           <TextField
+            fullWidth
             onKeyPress={onKeyPress}
-            autoComplete="on"
             placeholder="Searching for..."
             sx={{
               '& .MuiOutlinedInput-root': {

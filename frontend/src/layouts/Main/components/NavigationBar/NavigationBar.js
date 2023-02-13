@@ -9,15 +9,18 @@ import {
   Avatar,
   Tooltip,
   MenuItem,
+  useMediaQuery,
 } from '@mui/material'
 import { useState } from 'react'
 import { useAuth } from 'core'
 import { Link } from 'react-router-dom'
 import { CartButton, LiveSearch } from './components'
+import SearchButton from './components/SearchButton/SearchButton'
 
 const NavigationBar = () => {
   const { user, logout } = useAuth()
   const [anchorElUser, setAnchorElUser] = useState(null)
+  const isMatch = useMediaQuery((theme) => theme.breakpoints.down('md'))
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
@@ -47,10 +50,11 @@ const NavigationBar = () => {
             <Link to="/" style={{ maxHeight: 50 }}>
               <Box component="img" src="/images/logo2.svg" alt="logo" sx={{ maxHeight: 50 }} />
             </Link>
-            <LiveSearch />
+            {!isMatch && <LiveSearch />}
             <Box display="flex" alignItems="center">
+              {isMatch && <SearchButton />}
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, mr: 2 }}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, mx: 1 }}>
                   <Avatar alt={user?.name}>{user?.name[0]}</Avatar>
                 </IconButton>
               </Tooltip>
