@@ -50,15 +50,27 @@ const ProductCard = ({ product, center = false }) => {
           right: 10,
           opacity: 0,
           transition: 'opacity 0.25s',
+          gap: 1
         }}
         id="hidden-menu-fav-eye"
       >
         <ProductDialog isDialogOpened={isOpen} product={product} handleCloseDialog={() => setIsOpen(false)} />
-        <IconButton onClick={() => handleOpen()}>
-          <RemoveRedEye fontSize="small" sx={{ color: 'green' }} />
+        <IconButton
+          onClick={() => handleOpen()}
+          sx={{
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.8)' },
+          }}
+        >
+          <RemoveRedEye fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />
         </IconButton>
-        <IconButton>
-          <FavoriteBorder fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.26)' }} />
+        <IconButton
+          sx={{
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.8)' },
+          }}
+        >
+          <FavoriteBorder fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />
         </IconButton>
       </Box>
       {!!product.discountPercentage && (
