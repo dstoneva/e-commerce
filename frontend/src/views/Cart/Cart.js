@@ -7,14 +7,14 @@ import { useLocation } from 'react-router-dom'
 
 const Cart = () => {
   const location = useLocation()
-  const isMatch = useMediaQuery((theme) => theme.breakpoints.down('sm'))
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'))
   const { cart } = useCart()
   return (
     <PageLayout container isAsync={false}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={8} lg={8}>
           {cart.map((product) =>
-            !isMatch ? (
+            !isMobile ? (
               <CartProduct key={product._id} product={product} />
             ) : (
               <ProductCard key={product._id} product={product} />
