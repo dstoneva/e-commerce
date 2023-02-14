@@ -12,7 +12,7 @@ const fetcher = (url) => axios.get(`${API_URL}${url}`).then(({ data }) => data)
 const Store = ({ children }) => {
   return (
     <ThemeProvider theme={createTheme(theme)}>
-      <SnackbarProvider maxSnack={3} preventDuplicate>
+      <SnackbarProvider maxSnack={3} autoHideDuration={1500} preventDuplicate>
         <SWRConfig value={{ fetcher }}>
           <AuthProvider>
             <CategoriesProvider>
