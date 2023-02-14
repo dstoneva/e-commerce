@@ -1,9 +1,9 @@
 import { Grid, Paper, Box, Typography, IconButton } from '@mui/material'
 import React from 'react'
 import AirportShuttleIcon from '@mui/icons-material/AirportShuttle'
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import PriceCheckIcon from '@mui/icons-material/PriceCheck';
-import LockResetIcon from '@mui/icons-material/LockReset';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent'
+import PriceCheckIcon from '@mui/icons-material/PriceCheck'
+import LockResetIcon from '@mui/icons-material/LockReset'
 import theme from 'theme'
 
 const deliveryDetails = [
@@ -49,6 +49,7 @@ const Delivery = () => {
       {deliveryDetails.map((item) => (
         <Grid item xs={12} md={6} lg={3} key={item.id}>
           <Paper
+            elevation={1}
             sx={{
               alignItems: 'center',
               display: 'flex',
@@ -57,7 +58,7 @@ const Delivery = () => {
               width: '100%',
               cursor: 'pointer',
               p: 1,
-              '&:hover': { boxShadow: 5 },
+              '&:hover': { boxShadow: 3 },
             }}
           >
             <Box
