@@ -28,7 +28,7 @@ const Login = () => {
     },
   })
   return (
-    <Paper sx={{ p: 2, maxWidth: 400, width: '100%' }}>
+    <Paper elevation={3} sx={{ p: 2, maxWidth: 400, width: '100%' }}>
       <Box display="flex" justifyContent="center" flexDirection="column" alignItems="center" sx={{ mt: 1 }}>
         <Logo />
         <Typography variant="subtitle1" align="center" fontWeight="bold">
