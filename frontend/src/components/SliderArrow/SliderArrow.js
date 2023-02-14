@@ -1,12 +1,12 @@
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import { IconButton } from '@mui/material'
 
-const SliderArrow = ({ right = false, onClick }) => {
+const SliderArrow = ({ right = false, onClick, size }) => {
   return (
     <IconButton
       onClick={onClick}
       color="secondary"
-      size="large"
+      size={size || 'large'}
       sx={{
         position: 'absolute',
         top: '50%',
