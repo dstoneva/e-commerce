@@ -24,7 +24,7 @@ const QuickView = ({ product }) => {
       <Grid container spacing={4}>
         <Grid item md={5} sm={6} xs={12}>
           <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
-            {product.images.map((image) => (
+            {product.images.slice(0,3).map((image) => (
               <Box
                 component="img"
                 src={image}
