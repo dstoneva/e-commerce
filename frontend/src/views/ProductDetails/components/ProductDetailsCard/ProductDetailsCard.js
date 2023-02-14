@@ -18,7 +18,7 @@ const ProductDetailsCard = ({ product }) => {
       <Grid item xs={12} md={6}>
         <Box display="flex" alignItems="center" flexDirection="column">
           <CardMedia
-            loading="eager"
+            alt={product.title}
             component="img"
             src={product.images[mainImage]}
             sx={{ width: 300, height: 300, mb: 5, borderRadius: 2 }}
