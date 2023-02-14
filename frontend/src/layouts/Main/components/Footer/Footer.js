@@ -77,7 +77,12 @@ const Footer = () => {
                       return (
                         <Link href="#" sx={{ textDecoration: 'none' }} key={link}>
                           <Typography
-                            sx={{ color: (theme) => theme.palette.grey[500], mb: 1, fontSize: 15 }}
+                            sx={{
+                              color: (theme) => theme.palette.grey[500],
+                              '&:hover': { color: '#fff' },
+                              mb: 1,
+                              fontSize: 15,
+                            }}
                             variant="subtitle1"
                           >
                             {link}
