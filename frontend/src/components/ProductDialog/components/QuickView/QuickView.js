@@ -1,28 +1,44 @@
-import { Grid, Box, Typography, Rating, CardMedia, Divider, Button } from '@mui/material'
+import { Grid, Box, Typography, Rating, Divider, Button } from '@mui/material'
 import DisplayCurrency from 'components/DisplayCurrency'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import Slider from 'react-slick'
+import SliderArrow from 'components/SliderArrow'
 import { useCart } from 'core'
 
 const QuickView = ({ product }) => {
   const { getFinalPrice, itemIds, getQuantity, addToCart, removeFromCart } = useCart()
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    nextArrow: <SliderArrow right size="small" />,
+    prevArrow: <SliderArrow size="small" />,
+  }
+
   return (
     <Box>
       <Grid container spacing={4}>
-        <Grid item md={6} xs={12}>
-          <CardMedia
-            component="img"
-            src={product.thumbnail}
-            sx={{
-              height: { sm: 320, xs: 250 },
-              mx: 'auto',
-              width: { sm: 320, xs: 250 },
-              maxWidth: '100%',
-              borderRadius: 1,
-            }}
-          />
+        <Grid item md={5} sm={6} xs={12}>
+          <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
+            {product.images.map((image) => (
+              <Box
+                component="img"
+                src={image}
+                sx={{
+                  height: { sm: 300, xs: 250 },
+                  width: '100%',
+                  mx: 'auto',
+                  borderRadius: 1,
+                }}
+              />
+            ))}
+          </Slider>
         </Grid>
-        <Grid item md={6} xs={12}>
+        <Grid item md={7} sm={6} xs={12}>
           <Box display="flex" gap={1} flexDirection="column">
             <Typography variant="h4" fontWeight="bold">
               {product.title}
@@ -38,7 +54,7 @@ const QuickView = ({ product }) => {
               <Rating value={product.rating} readOnly size="small" />
               <Typography variant="subtitle">(50)</Typography>
             </Box>
-            <Box sx={{my: 2}}>
+            <Box sx={{ my: 2 }}>
               <Typography variant="subtitle" color={(theme) => theme.palette.grey[600]}>
                 {product.description}
               </Typography>
