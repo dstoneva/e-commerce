@@ -12,7 +12,7 @@ const PageLayout = ({
   if (error)
     return (
       <Container>
-        <Typography>Oopsie, we had an error, please contact the system administrator</Typography>
+        <Typography>We had an error, please contact the system administrator.</Typography>
       </Container>
     )
 

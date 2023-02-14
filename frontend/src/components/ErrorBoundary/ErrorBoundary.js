@@ -30,7 +30,7 @@ class ErrorBoundary extends React.Component {
       return (
         <Fragment>
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-            <img src="/illustrations/issue.svg" alt="error" width="550" />
+            <img src="/images/issue.png" alt="error" width="350" />
             <Typography variant="h3" align="center" sx={{ mt: 4 }}>
               We had an internal issue
             </Typography>
