@@ -36,6 +36,7 @@ const bannerSlide = (
 
       <Grid item xs={12} sm={5}>
         <Box
+          alt="Nike black"
           component="img"
           src="https://bazaar.ui-lib.com/assets/images/products/nike-black.png"
           sx={{ maxWidth: 530, width: '100%', maxheight: 400, height: '100%' }}

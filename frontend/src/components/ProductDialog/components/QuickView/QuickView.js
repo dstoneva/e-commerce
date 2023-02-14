@@ -27,6 +27,7 @@ const QuickView = ({ product }) => {
             {product.images.slice(0, 3).map((image, i) => (
               <Box
                 key={i}
+                alt={product.title}
                 component="img"
                 src={image}
                 sx={{
