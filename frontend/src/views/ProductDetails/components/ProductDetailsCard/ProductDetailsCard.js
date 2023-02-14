@@ -52,7 +52,7 @@ const ProductDetailsCard = ({ product }) => {
                   minWidth: 64,
                 }}
               >
-                <Box display="flex" component="img" alt={product.title} src={image} sx={{ maxWidth: '100%' }} />
+                <Box display="flex" component="img" src={image} sx={{ maxWidth: '100%' }} />
               </Box>
             ))}
           </Box>
