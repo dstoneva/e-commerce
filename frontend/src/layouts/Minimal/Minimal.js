@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Container, useTheme } from '@mui/material'
-import { ErrorBoundary, Logo } from 'components'
+import { ErrorBoundary } from 'components'
 import { Outlet } from 'react-router-dom/dist'
 
 const Minimal = ({ isSuspense }) => {
@@ -8,9 +8,6 @@ const Minimal = ({ isSuspense }) => {
   return (
     <ErrorBoundary>
       <Container>
-        <Box display="flex" justifyContent="center" sx={{ height: theme.sizing.header.height }}>
-          <Logo />
-        </Box>
         <Box
           display="flex"
           alignItems="center"

@@ -1,4 +1,5 @@
 import { Box, Button, Divider, Link, Paper, TextField, Typography } from '@mui/material'
+import { Logo } from 'components'
 import { useAuth } from 'core'
 import { useFormik } from 'formik'
 import { Link as RouterLink } from 'react-router-dom'
@@ -28,9 +29,12 @@ const Login = () => {
   })
   return (
     <Paper sx={{ p: 2, maxWidth: 400, width: '100%' }}>
-      <Typography variant="h6" align="center">
-        Login
-      </Typography>
+      <Box display="flex" justifyContent="center" flexDirection="column" alignItems="center" sx={{ mt: 1 }}>
+        <Logo />
+        <Typography variant="subtitle1" align="center" fontWeight="bold">
+          Welcome To Bazaar
+        </Typography>
+      </Box>
       <Divider sx={{ my: 2 }} />
       <form onSubmit={formik.handleSubmit}>
         <TextField
@@ -61,7 +65,7 @@ const Login = () => {
 
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Button color="primary" variant="contained" type="submit">
-            Submit
+            Login
           </Button>
           <Link component={RouterLink} to={PageURLs.Register} variant="caption">
             No account? Register!
