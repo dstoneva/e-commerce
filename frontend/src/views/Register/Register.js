@@ -4,6 +4,7 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { Link as RouterLink } from 'react-router-dom'
 import { PageURLs } from 'Routes'
+import { Logo } from 'components'
 
 const Register = () => {
   const { register } = useAuth()
@@ -36,10 +37,13 @@ const Register = () => {
     },
   })
   return (
-    <Paper sx={{ p: 2, maxWidth: 400, width: '100%' }}>
-      <Typography variant="h6" align="center">
-        Register
-      </Typography>
+    <Paper elevation={3} sx={{ p: 2, maxWidth: 400, width: '100%', mt: 5 }}>
+      <Box display="flex" justifyContent="center" flexDirection="column" alignItems="center" sx={{ mt: 1 }}>
+        <Logo />
+        <Typography variant="subtitle1" align="center" fontWeight="bold">
+          Create Your Account
+        </Typography>
+      </Box>
       <Divider sx={{ my: 2 }} />
       <form onSubmit={formik.handleSubmit}>
         <TextField
