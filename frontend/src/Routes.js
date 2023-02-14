@@ -81,8 +81,8 @@ const RoutesComponent = () => {
               </PrivateRoute>
             }
           />
-          <Route path="*" element={<NotFoundView />} />
         </Route>
+        <Route path="*" element={<NotFoundView />} />
         <Route path="/" element={<MinimalLayout />}>
           <Route
             path={PageURLs.Login}
