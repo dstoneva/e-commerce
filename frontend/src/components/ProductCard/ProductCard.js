@@ -85,6 +85,7 @@ const ProductCard = ({ product, center = false }) => {
       )}
       <CardMedia
         sx={{ cursor: 'pointer' }}
+        loading='eager'
         component="img"
         height={300}
         image={product.thumbnail}
