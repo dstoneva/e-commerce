@@ -1,5 +1,6 @@
-import { Grid, Paper, TextField, Typography, Container } from '@mui/material'
+import { Grid, Paper, TextField, Typography, Container, Box, Autocomplete } from '@mui/material'
 import { Subtotal } from 'components'
+import countries from 'utils/constants/countries'
 
 const Shipping = ({ formik }) => {
   return (
@@ -10,7 +11,6 @@ const Shipping = ({ formik }) => {
             <Typography variant="subtitle2" align="left" sx={{ fontWeight: 600, mb: 2, alignContent: 'flex-start' }}>
               Shipping Address
             </Typography>
-
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -78,16 +78,47 @@ const Shipping = ({ formik }) => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  required
-                  label="Country"
+                <Autocomplete
+                  id="country-autocomplete"
                   name="address.country"
+                  disableClearable
+                  fullWidth
                   value={formik.values.address?.country}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.address?.country && Boolean(formik.errors.address?.country)}
-                  helperText={formik.touched.address?.country && formik.errors.address?.country}
+                  isOptionEqualToValue={(option, value) => option.label === value}
+                  onChange={(e, value) => {
+                    formik.setFieldValue('address.country', value.label)
+                  }}
+                  options={countries}
+                  autoHighlight
+                  renderOption={(props, option) => (
+                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                      <img
+                        loading="lazy"
+                        width="20"
+                        src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                        srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                        alt=""
+                      />
+                      {option.label}
+                    </Box>
+                  )}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      required
+                      label="Country"
+                      name="address.country"
+                      value={formik.values.address?.country}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={formik.touched.address?.country && Boolean(formik.errors.address?.country)}
+                      helperText={formik.touched.address?.country && formik.errors.address?.country}
+                      inputProps={{
+                        ...params.inputProps,
+                      }}
+                    />
+                  )}
                 />
               </Grid>
             </Grid>
