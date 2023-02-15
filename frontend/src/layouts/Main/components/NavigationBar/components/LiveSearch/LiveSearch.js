@@ -37,7 +37,7 @@ const LiveSearch = ({ toggleDrawer, setState }) => {
       setInputValue('')
       if (setState && toggleDrawer) {
         setState(false)
-        toggleDrawer(false)
+        toggleDrawer()(false)
       }
     }
   }
@@ -48,7 +48,7 @@ const LiveSearch = ({ toggleDrawer, setState }) => {
     setInputValue('')
     if (setState && toggleDrawer) {
       setState(false)
-      toggleDrawer(false)
+      toggleDrawer()(false)
     }
   }
 
