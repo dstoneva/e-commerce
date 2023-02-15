@@ -16,7 +16,7 @@ const SearchButton = () => {
   }
 
   return (
-    <Box>
+    <div>
       <IconButton sx={{ p: 0 }} onClick={toggleDrawer(true)}>
         <Avatar>
           <SearchIcon />
@@ -38,11 +38,11 @@ const SearchButton = () => {
           </IconButton>
         </Box>
 
-        <Box sx={{ height: '100vh', padding: 2, width: 'auto' }}>
+        <Box sx={{ height: '300px', padding: 2, width: 'auto' }}>
           <LiveSearch toggleDrawer={toggleDrawer} setState={setState} />
         </Box>
       </Drawer>
-    </Box>
+    </div>
   )
 }
 
