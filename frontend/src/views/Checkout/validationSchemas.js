@@ -10,10 +10,14 @@ export const validationSchemas = {
       phone: yup
         .string('Enter your Phone')
         .required('Phone is required')
-        .matches(/^\s*\+?\s*([0-9][\s-]*){9,}$/, 'Enter a valid phone'),
+        .matches(/^\s*\+?\s*([0-9][\s-]*){9,}$/, 'Enter a valid phone')
+        .max(10, 'Phone number must be at most 10 characters'),
       email: yup.string('Enter your email').email('Enter a valid email').required('Email is required'),
-      zip: yup.string('Enter your zip code').required('Zip code is required'),
-      address1: yup.string('Enter your address').required('Address is required'),
+      zip: yup
+        .string('Enter your zip code')
+        .required('Zip code is required')
+        .max(5, 'Zip code must be at most 5 characters'),
+      address1: yup.string('Enter your address').required('Address is required').max(100, 'Address is too long'),
       country: yup.string('Enter your country').required('Country is required'),
     }),
   }),
