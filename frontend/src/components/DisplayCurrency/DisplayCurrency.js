@@ -1,5 +1,5 @@
 const DisplayCurrency = ({ number }) => {
-  return new Intl.NumberFormat('bg-BG', { style: 'currency', currency: 'EUR' }).format(number)
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(number)
 }
 
 export default DisplayCurrency
