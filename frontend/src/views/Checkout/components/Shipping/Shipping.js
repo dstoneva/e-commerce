@@ -117,7 +117,6 @@ const Shipping = ({ formik }) => {
                       inputProps={{
                         ...params.inputProps,
                         autoComplete: 'new-country', // disable autocomplete and autofill
-
                       }}
                     />
                   )}
