@@ -30,7 +30,7 @@ const Checkout = () => {
         zip: '',
         address1: '',
         address2: '',
-        country: '',
+        country: 'Bulgaria',
       },
       payment: {
         type: 'delivery',
@@ -128,7 +128,7 @@ const Checkout = () => {
       ) : (
         <>
           <Cart />
-          <Typography align="center" vartiant="subtitle1" fontWeight='bold'>
+          <Typography align="center" vartiant="subtitle1" fontWeight="bold">
             You will be redirected to the homepage in 5 seconds
           </Typography>
         </>
