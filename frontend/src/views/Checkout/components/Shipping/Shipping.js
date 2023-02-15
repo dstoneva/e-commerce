@@ -116,6 +116,8 @@ const Shipping = ({ formik }) => {
                       helperText={formik.touched.address?.country && formik.errors.address?.country}
                       inputProps={{
                         ...params.inputProps,
+                        autoComplete: 'new-country', // disable autocomplete and autofill
+
                       }}
                     />
                   )}
