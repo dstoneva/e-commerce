@@ -162,9 +162,7 @@ const FavouritesProvider = ({ children }) => {
       value={{
         favourites: state.favourites,
         favouriteItemIds: state.favourites.map((item) => item._id),
-        favouritesQuantity: state.favourites
-          .map((item) => item.favourite)
-          .reduce((accumulator, currentValue) => accumulator + currentValue, 0),
+        favouritesQuantity: state.favourites.length,
         isFavouritesLoading: state.isFavouritesLoading,
         addToFavourites,
         resetFavourites,
