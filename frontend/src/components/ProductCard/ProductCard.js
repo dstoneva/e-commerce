@@ -11,9 +11,10 @@ import {
   Chip,
   IconButton,
 } from '@mui/material'
-import { useCart } from 'core'
+import { useCart, useFavourites } from 'core'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import { DEFAULT_LOCALIZATION } from 'config'
 import { FavoriteBorder, RemoveRedEye } from '@mui/icons-material'
@@ -23,6 +24,7 @@ import { ProductDialog, DisplayCurrency } from 'components'
 
 const ProductCard = ({ product, center = false }) => {
   const { addToCart, itemIds, removeFromCart, getQuantity } = useCart()
+  const { addToFavourites, removeFromFavourites, isFavourite } = useFavourites()
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -50,7 +52,7 @@ const ProductCard = ({ product, center = false }) => {
           right: 10,
           opacity: 0,
           transition: 'opacity 0.25s',
-          gap: 1
+          gap: 1,
         }}
         id="hidden-menu-fav-eye"
       >
@@ -64,14 +66,27 @@ const ProductCard = ({ product, center = false }) => {
         >
           <RemoveRedEye fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />
         </IconButton>
-        <IconButton
-          sx={{
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.8)' },
-          }}
-        >
-          <FavoriteBorder fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />
-        </IconButton>
+        {!isFavourite(product._id) ? (
+          <IconButton
+            onClick={() => addToFavourites(product)}
+            sx={{
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.8)' },
+            }}
+          >
+            <FavoriteBorder fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />
+          </IconButton>
+        ) : (
+          <IconButton
+            onClick={() => removeFromFavourites(product._id)}
+            sx={{
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.8)' },
+            }}
+          >
+            <FavoriteIcon fontSize="small" sx={{ color: 'crimson' }} />
+          </IconButton>
+        )}
       </Box>
       {!!product.discountPercentage && (
         <Chip
@@ -85,7 +100,7 @@ const ProductCard = ({ product, center = false }) => {
       )}
       <CardMedia
         sx={{ cursor: 'pointer' }}
-        loading='eager'
+        loading="eager"
         component="img"
         height={300}
         image={product.thumbnail}
