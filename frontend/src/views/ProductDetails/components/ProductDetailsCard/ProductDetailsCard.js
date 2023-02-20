@@ -1,10 +1,12 @@
-import { Typography, Box, CardMedia, Grid, Rating, Button } from '@mui/material'
+import { Typography, Box, CardMedia, Grid, Rating, Button, IconButton, Tooltip } from '@mui/material'
 import { DisplayCurrency } from 'components'
 import { useState } from 'react'
 import { useCart, useFavourites } from 'core'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import theme from 'theme'
+import { FavoriteBorderOutlined, FavoriteRounded } from '@mui/icons-material'
+import Favorite from '@mui/icons-material/Favorite'
 
 const ProductDetailsCard = ({ product }) => {
   const { getFinalPrice, addToCart, removeFromCart, itemIds, getQuantity } = useCart()
@@ -77,7 +79,7 @@ const ProductDetailsCard = ({ product }) => {
             <DisplayCurrency number={getFinalPrice(product)} />
           </Typography>
           <Typography variant="subtitle2">{product.stock > 0 ? 'Stock available' : 'Out of Stock'}</Typography>
-          <Box display="flex" gap={3}>
+          <Box display="flex" gap={2}>
             {itemIds.includes(product._id) ? (
               <>
                 <Button
@@ -112,21 +114,35 @@ const ProductDetailsCard = ({ product }) => {
                 {product.stock > 0 ? 'Add to cart' : 'Out of stock'}
               </Button>
             )}
+            {!isFavourite(product._id) ? (
+              <Tooltip title="Add to favourites">
+                <IconButton
+                  aria-label="add to favourites"
+                  sx={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                    '&:hover': { backgroundColor: 'primary.light', color: 'crimson' },
+                  }}
+                  onClick={() => addToFavourites(product)}
+                >
+                  <FavoriteBorderOutlined size="medium"></FavoriteBorderOutlined>
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Remove from favourites">
+                <IconButton
+                  color="primary"
+                  aria-label="remove from favourites"
+                  sx={{
+                    backgroundColor: 'primary.light',
+                    '&:hover': { backgroundColor: 'primary.light' },
+                  }}
+                  onClick={() => removeFromFavourites(product._id)}
+                >
+                  <Favorite size="medium" />
+                </IconButton>
+              </Tooltip>
+            )}
           </Box>
-          {!isFavourite(product._id) ? (
-            <Button sx={{ width: 180 }} variant="contained" color="primary" onClick={() => addToFavourites(product)}>
-              Add to favourites
-            </Button>
-          ) : (
-            <Button
-              sx={{ width: 200 }}
-              variant="outlined"
-              color="primary"
-              onClick={() => removeFromFavourites(product._id)}
-            >
-              Remove from favourites
-            </Button>
-          )}
 
           <Typography sx={{ mt: 2 }}>
             Sold by: <b>Some store</b>
