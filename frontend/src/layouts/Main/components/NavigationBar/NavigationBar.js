@@ -14,7 +14,7 @@ import {
 import { useState } from 'react'
 import { useAuth } from 'core'
 import { Link } from 'react-router-dom'
-import { CartButton, LiveSearch } from './components'
+import { CartButton, FavouritesButton, LiveSearch } from './components'
 import SearchButton from './components/SearchButton/SearchButton'
 
 const NavigationBar = () => {
@@ -58,6 +58,7 @@ const NavigationBar = () => {
             {!isMobile && <LiveSearch />}
             <Box display="flex" alignItems="center">
               {isMobile && <SearchButton />}
+              <FavouritesButton />
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, mx: 1 }}>
                   <Avatar alt={user?.name}>{user?.name[0]}</Avatar>
