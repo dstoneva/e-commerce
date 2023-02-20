@@ -48,7 +48,12 @@ const NavigationBar = () => {
             sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 80, width: '100%' }}
           >
             <Link to="/" style={{ maxHeight: 50 }}>
-              <Box component="img" src="/images/logo2.svg" alt="logo" sx={{ maxHeight: 50 }} />
+              <Box
+                component="img"
+                src={isMobile ? 'images/bazaar-black-sm.svg' : '/images/logo2.svg'}
+                alt="logo"
+                sx={{ maxHeight: 50 }}
+              />
             </Link>
             {!isMobile && <LiveSearch />}
             <Box display="flex" alignItems="center">
