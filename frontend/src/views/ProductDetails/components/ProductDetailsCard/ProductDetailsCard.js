@@ -1,18 +1,20 @@
 import { Typography, Box, CardMedia, Grid, Rating, Button } from '@mui/material'
 import { DisplayCurrency } from 'components'
 import { useState } from 'react'
-import { useCart } from 'core'
+import { useCart, useFavourites } from 'core'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import theme from 'theme'
 
 const ProductDetailsCard = ({ product }) => {
   const { getFinalPrice, addToCart, removeFromCart, itemIds, getQuantity } = useCart()
+  const { isFavourite, addToFavourites, removeFromFavourites } = useFavourites()
 
   const [mainImage, setMainImage] = useState(0)
   const changeImageHandler = (event, index) => {
     setMainImage(index)
   }
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>
@@ -111,6 +113,21 @@ const ProductDetailsCard = ({ product }) => {
               </Button>
             )}
           </Box>
+          {!isFavourite(product._id) ? (
+            <Button sx={{ width: 180 }} variant="contained" color="primary" onClick={() => addToFavourites(product)}>
+              Add to favourites
+            </Button>
+          ) : (
+            <Button
+              sx={{ width: 200 }}
+              variant="outlined"
+              color="primary"
+              onClick={() => removeFromFavourites(product._id)}
+            >
+              Remove from favourites
+            </Button>
+          )}
+
           <Typography sx={{ mt: 2 }}>
             Sold by: <b>Some store</b>
           </Typography>
