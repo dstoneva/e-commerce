@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { ProductDialog, DisplayCurrency } from 'components'
 
-const ProductCard = ({ product, center = false }) => {
+const ProductCard = ({ product, center = false, quickView }) => {
   const { addToCart, itemIds, removeFromCart, getQuantity } = useCart()
   const { addToFavourites, removeFromFavourites, isFavourite } = useFavourites()
   const navigate = useNavigate()
@@ -56,16 +56,20 @@ const ProductCard = ({ product, center = false }) => {
         }}
         id="hidden-menu-fav-eye"
       >
-        <ProductDialog isDialogOpened={isOpen} product={product} handleCloseDialog={() => setIsOpen(false)} />
-        <IconButton
-          onClick={() => handleOpen()}
-          sx={{
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.8)' },
-          }}
-        >
-          <RemoveRedEye fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />
-        </IconButton>
+        {quickView && (
+          <>
+            <ProductDialog isDialogOpened={isOpen} product={product} handleCloseDialog={() => setIsOpen(false)} />
+            <IconButton
+              onClick={() => handleOpen()}
+              sx={{
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.8)' },
+              }}
+            >
+              <RemoveRedEye fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />
+            </IconButton>
+          </>
+        )}
         {!isFavourite(product._id) ? (
           <IconButton
             onClick={() => addToFavourites(product)}

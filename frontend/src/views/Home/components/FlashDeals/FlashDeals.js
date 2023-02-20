@@ -74,7 +74,7 @@ const FlashDeals = () => {
         <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
           {products?.result.map((product) => (
             <Grid item xs={12} xl={3} lg={4} md={6} sm={12} key={product._id}>
-              <ProductCard product={product} />
+              <ProductCard quickView product={product} />
             </Grid>
           ))}
         </Slider>
