@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom'
 import { PageURLs } from 'Routes'
 
 const CartButton = () => {
-  const { cart, removeFromCart, addToCart, getFinalPrice, totalPrice, quantity } = useCart()
+  const { cart, removeFromCart, addToCart, getFinalPrice, totalPrice, quantity, resetCart } = useCart()
   const navigate = useNavigate()
 
   const [state, setState] = useState(false)
@@ -134,12 +134,25 @@ const CartButton = () => {
             color="primary"
             variant="outlined"
             fullWidth
+            sx={{ mb: 1 }}
             onClick={() => {
               navigate(PageURLs.Cart)
               toggleDrawer()(false)
             }}
           >
             View cart
+          </Button>
+          <Button
+            disabled={quantity < 1 ? true : false}
+            color="secondary"
+            variant="outlined"
+            fullWidth
+            onClick={() => {
+              resetCart()
+              toggleDrawer()(false)
+            }}
+          >
+            Empty cart
           </Button>
         </Box>
       </Drawer>
