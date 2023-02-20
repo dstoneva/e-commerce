@@ -5,7 +5,7 @@ import { useCart, useFavourites } from 'core'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import theme from 'theme'
-import { FavoriteBorderOutlined, FavoriteRounded } from '@mui/icons-material'
+import { FavoriteBorderOutlined } from '@mui/icons-material'
 import Favorite from '@mui/icons-material/Favorite'
 
 const ProductDetailsCard = ({ product }) => {
