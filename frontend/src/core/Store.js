@@ -1,5 +1,5 @@
 import { SnackbarProvider } from 'notistack'
-import { AuthProvider, CartProvider } from './contexts'
+import { AuthProvider, CartProvider, FavouritesProvider } from './contexts'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import theme from 'theme'
 import { SWRConfig } from 'swr'
@@ -16,7 +16,9 @@ const Store = ({ children }) => {
         <SWRConfig value={{ fetcher }}>
           <AuthProvider>
             <CategoriesProvider>
-              <CartProvider>{children}</CartProvider>
+              <FavouritesProvider>
+                <CartProvider>{children}</CartProvider>
+              </FavouritesProvider>
             </CategoriesProvider>
           </AuthProvider>
         </SWRConfig>
