@@ -9,7 +9,7 @@ const ProductDetails = () => {
   const { data: product, error } = useSWR(`/products/${params.productId}`)
 
   return (
-    <PageLayout error={error} data={product}>
+    <PageLayout error={error} data={product} container>
       <Container
         sx={{
           mt: 5,
