@@ -20,14 +20,15 @@ const ScrollToTopButton = () => {
   useEffect(() => {
     window.addEventListener('scroll', handleVisibleButton)
   })
-  
+
   return (
     <IconButton
       href="#"
       aria-label="Scroll To Top"
       size="medium"
       sx={{
-        display: visible ? 'flex' : 'none',
+        visibility: visible ? 'visible' : 'hidden',
+        display: {xs: 'none', sm: 'flex'},
         position: 'fixed',
         bottom: '50px',
         right: '50px',
