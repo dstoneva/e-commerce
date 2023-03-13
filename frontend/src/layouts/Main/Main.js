@@ -1,8 +1,8 @@
 import { Mail, Phone } from '@mui/icons-material'
-import { Box, CircularProgress, Container, Divider, Link, Typography } from '@mui/material'
+import { Box, CircularProgress, Container, Divider, Link, Typography, Stack } from '@mui/material'
 import { ErrorBoundary } from 'components'
 import { Outlet } from 'react-router-dom/dist'
-import { Footer, NavigationBar } from './components'
+import { NavigationBar } from './components'
 
 const Main = ({ isSuspense }) => {
   return (
@@ -53,8 +53,13 @@ const Main = ({ isSuspense }) => {
         </Container>
       </Box>
       <NavigationBar />
-      {isSuspense ? <CircularProgress /> : <Outlet />}
-      <Footer />
+      {isSuspense ? (
+        <Stack justifyContent="center" alignItems="center" direction="row" minHeight="100vh">
+          <CircularProgress />
+        </Stack>
+      ) : (
+        <Outlet />
+      )}
     </ErrorBoundary>
   )
 }

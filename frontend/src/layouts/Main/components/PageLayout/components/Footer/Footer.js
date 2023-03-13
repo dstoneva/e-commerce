@@ -50,9 +50,9 @@ const Footer = () => {
   ]
 
   return (
-    <Box sx={{ bgcolor: '#222935', mt: 10 }}>
-      <Container disableGutters>
-        <Grid container spacing={3} sx={{ p: 10, px: 5 }}>
+    <Box component="footer" sx={{ bgcolor: '#222935', mt: 10 }}>
+      <Container>
+        <Grid container spacing={2} sx={{ py: 10 }}>
           <Grid item lg={4} md={6} sm={6} xs={12}>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <Box component="img" src="images/logo.svg" alt="logo" sx={{ height: 50, mb: 2 }} />
@@ -60,7 +60,7 @@ const Footer = () => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, in gravida. Sit diam duis
                 mauris nulla cursus. Erat et lectus vel ut sollicitudin elit at amet.
               </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: { xs: 'column', sm: 'row' } }}>
                 <AppDownloadButton />
               </Box>
             </Box>

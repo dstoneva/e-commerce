@@ -69,7 +69,7 @@ const Checkout = () => {
   }
 
   const steps = [
-    { label: 'Cart', component: <Cart /> },
+    { label: 'Cart', component: <Cart withoutFooter={true} /> },
     { label: 'Shipping', component: <Shipping formik={formik} /> },
     { label: 'Payment', component: <Payment formik={formik} /> },
   ]
@@ -127,7 +127,7 @@ const Checkout = () => {
         </Grid>
       ) : (
         <>
-          <Cart />
+          <Cart withoutFooter={true} />
           <Typography align="center" vartiant="subtitle1" fontWeight="bold">
             You will be redirected to the homepage in 5 seconds
           </Typography>
