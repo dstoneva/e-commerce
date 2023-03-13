@@ -9,6 +9,7 @@ import {
   ProductList,
   Delivery,
   FlashDeals,
+  ScrollToTopButton,
 } from './components'
 
 const Home = () => {
@@ -35,6 +36,7 @@ const Home = () => {
             <Delivery />
           </Grid>
         </Grid>
+        <ScrollToTopButton />
       </PageLayout>
     </>
   )
