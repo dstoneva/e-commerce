@@ -16,7 +16,10 @@ E-commerce is an e-commerce platform that allows users to purchase various items
 
 ## Getting Started
 
-Use the package manager [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) to install the dependencies.
+1. Clone this project
+
+2. Use the package manager [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) to install the dependencies.
+
 
 ```bash
 npm install
@@ -26,12 +29,12 @@ npm install
 yarn
 ```
 
-Start the development server
+3. Run frontend with 
 
 ```bash
-npm run dev
+npm start
 
-#or
+#or 
 
-yarn dev
+yarn start
 ```
