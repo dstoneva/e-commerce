@@ -71,7 +71,7 @@ export default function Comment({ reviews }) {
           />
         </Box>
         <Button
-          disabled={comment === '' || rating === 0 ? true : false}
+          disabled={comment.trim() === '' || rating === 0 ? true : false}
           onClick={doSubmit}
           variant="contained"
           color="primary"
