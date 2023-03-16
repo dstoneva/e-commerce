@@ -55,7 +55,7 @@ const Footer = () => {
         <Grid container spacing={2} sx={{ py: 10 }}>
           <Grid item lg={4} md={6} sm={6} xs={12}>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              <Box component="img" src="images/logo.svg" alt="logo" sx={{ height: 50, mb: 2 }} />
+              <Box component="img" src="/images/logo.svg" alt="logo" sx={{ height: 50, mb: 2 }} />
               <Typography variant="subtitle" sx={{ color: (theme) => theme.palette.grey[500], mb: 2, fontSize: 15 }}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, in gravida. Sit diam duis
                 mauris nulla cursus. Erat et lectus vel ut sollicitudin elit at amet.

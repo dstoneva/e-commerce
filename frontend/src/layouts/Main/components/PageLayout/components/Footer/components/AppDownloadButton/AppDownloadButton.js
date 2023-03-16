@@ -2,7 +2,7 @@ import { ButtonBase, Box, Typography } from '@mui/material'
 const AppDownloadButton = () => {
   const buttonData = [
     {
-      logoSrc: 'images/Google_Play-Icon-Logo.svg',
+      logoSrc: '/images/Google_Play-Icon-Logo.svg',
       imgAlt: 'Google Play Logo',
       topText: 'Get it on',
       bottomText: 'Google play',
@@ -10,7 +10,7 @@ const AppDownloadButton = () => {
       key: 1,
     },
     {
-      logoSrc: 'images/App_Store_(iOS)-Logo.svg',
+      logoSrc: '/images/App_Store_(iOS)-Logo.svg',
       imgAlt: 'App Store Logo',
       topText: 'Download it on',
       bottomText: 'App Store',
