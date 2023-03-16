@@ -15,7 +15,7 @@ const LiveSearch = ({ toggleDrawer, setState }) => {
 
   useEffect(() => {
     try {
-      axios.get(`${API_URL}/products`).then((res) => {
+      axios.get(`${API_URL}/products?page=1&productsPerPage=30`).then((res) => {
         setJsonResults(res?.data?.result)
       })
     } catch (error) {
