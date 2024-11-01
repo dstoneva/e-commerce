@@ -23,20 +23,18 @@ import { PageURLs } from 'Routes'
 const CartButton = () => {
   const { cart, removeFromCart, addToCart, getFinalPrice, totalPrice, quantity, resetCart } = useCart()
   const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
 
-  const [state, setState] = useState(false)
-
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return
-    }
-
-    setState(open)
+  // Separate functions for opening and closing the drawer
+  const openDrawer = () => setIsOpen(true)
+  const closeDrawer = (event) => {
+    if (event?.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return
+    setIsOpen(false)
   }
 
   return (
     <div>
-      <IconButton sx={{ p: 0 }} onClick={toggleDrawer(true)}>
+      <IconButton sx={{ p: 0 }} onClick={openDrawer}>
         <Badge badgeContent={quantity} color="primary">
           <Avatar>
             <ShoppingBag />
@@ -46,13 +44,14 @@ const CartButton = () => {
 
       <Drawer
         anchor="right"
-        open={state}
-        onClose={toggleDrawer(false)}
+        open={isOpen}
+        onClose={closeDrawer}
+        onClick={(event) => event.stopPropagation()}
         PaperProps={{
           sx: { display: 'flex', flexDirection: 'column', justifyContent: 'space-between' },
         }}
       >
-        <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={toggleDrawer(false)}>
+        <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={closeDrawer}>
           <Close />
         </IconButton>
         <Box>
@@ -77,18 +76,21 @@ const CartButton = () => {
                         </Typography>
                         <Typography variant="overline" component="div">
                           {product.discountPercentage > 0 ? (
-                            <>
-                              <Box display="flex" alignItems="center">
-                                <Box>
-                                  <DisplayCurrency number={finalPrice} />
-                                </Box>
-                                <Box
-                                  sx={{ textDecoration: 'line-through', ml: 1, color: 'error.main', display: 'inline' }}
-                                >
-                                  <DisplayCurrency number={product.price} />
-                                </Box>
+                            <Box display="flex" alignItems="center">
+                              <Box>
+                                <DisplayCurrency number={finalPrice} />
                               </Box>
-                            </>
+                              <Box
+                                sx={{
+                                  textDecoration: 'line-through',
+                                  ml: 1,
+                                  color: 'error.main',
+                                  display: 'inline',
+                                }}
+                              >
+                                <DisplayCurrency number={product.price} />
+                              </Box>
+                            </Box>
                           ) : (
                             <DisplayCurrency number={finalPrice} />
                           )}
@@ -117,39 +119,42 @@ const CartButton = () => {
         </Box>
         <Box p={2}>
           <Button
-            disabled={quantity === 0 ? true : false}
+            disabled={quantity === 0}
             color="primary"
             variant="contained"
             fullWidth
             sx={{ mb: 1 }}
-            onClick={() => {
-              navigate(PageURLs.Checkout)
-              toggleDrawer()(false)
+            onClick={(event) => {
+              event.stopPropagation()
+              setIsOpen(false)
+              setTimeout(() => navigate(PageURLs.Checkout), 200) // Navigate after drawer is fully closed
             }}
           >
             Checkout (<DisplayCurrency number={totalPrice} />)
           </Button>
           <Button
-            disabled={quantity === 0 ? true : false}
+            disabled={quantity === 0}
             color="primary"
             variant="outlined"
             fullWidth
             sx={{ mb: 1 }}
-            onClick={() => {
-              navigate(PageURLs.Cart)
-              toggleDrawer()(false)
+            onClick={(event) => {
+              event.stopPropagation()
+              setIsOpen(false)
+              setTimeout(() => navigate(PageURLs.Cart), 200) // Navigate after drawer is fully closed
             }}
           >
             View cart
           </Button>
           <Button
-            disabled={quantity < 1 ? true : false}
+            disabled={quantity < 1}
             color="secondary"
             variant="outlined"
             fullWidth
-            onClick={() => {
+            onClick={(event) => {
+              event.stopPropagation()
               resetCart()
-              toggleDrawer()(false)
+              setIsOpen(false)
             }}
           >
             Empty cart
