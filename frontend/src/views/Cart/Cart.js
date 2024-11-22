@@ -1,19 +1,35 @@
-import { Grid, useMediaQuery, Typography, Box, Link } from '@mui/material'
+import { Grid, useMediaQuery, Typography, Box, Link, Skeleton, Container } from '@mui/material'
 import { useCart } from 'core'
-import { PageLayout } from 'layouts/Main/components'
 import { CartProduct } from './components'
 import { ProductCard, Subtotal, SideMenu } from 'components'
 import { useLocation } from 'react-router-dom'
 
-const Cart = ({ withoutFooter }) => {
+const Cart = () => {
   const location = useLocation()
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'))
-  const { cart } = useCart()
+  const { cart, isCartLoading } = useCart()
+
   return (
-    <PageLayout container isAsync={false} withoutFooter={withoutFooter}>
-      {cart.length < 1 ? (
+    <Container sx={{ py: 4 }}>
+      {isCartLoading ? (
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={8} lg={8}>
+            {Array.from(new Array(3)).map((_, index) => (
+              <Skeleton
+                key={index}
+                variant="rectangular"
+                height={isMobile ? 250 : 120}
+                sx={{ borderRadius: 2, mb: 2 }}
+              />
+            ))}
+          </Grid>
+          <Grid item xs={12} md={4} lg={4}>
+            <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 2, mb: 2 }} />
+          </Grid>
+        </Grid>
+      ) : cart.length < 1 ? (
         <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column" gap={2} height={450}>
-          <Box component="img" src="/images/cart.png" alt="Cart" height={200} />
+          <Box component="img" loading="eager" src="/images/cart.webp" alt="Cart" height={200} />
           <Typography align="center" variant="h4">
             Your cart is currently empty!
           </Typography>
@@ -38,7 +54,7 @@ const Cart = ({ withoutFooter }) => {
           </Grid>
         </Grid>
       )}
-    </PageLayout>
+    </Container>
   )
 }
 
