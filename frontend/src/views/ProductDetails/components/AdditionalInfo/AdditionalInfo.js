@@ -2,12 +2,15 @@ import { Box, Tabs, Tab } from '@mui/material'
 import { useState } from 'react'
 import TabContext from '@mui/lab/TabContext'
 import { Description, Comment } from './components'
-import { DUMMY_REVIEWS } from './data'
 
-const AdditionalInfo = ({ product }) => {
+const AdditionalInfo = ({ product, isLoading }) => {
   const tabsData = [
-    { title: 'Description', content: <Description product={product} />, key: 1 },
-    { title: 'Reviews', content: <Comment reviews={DUMMY_REVIEWS} />, key: 2 },
+    { title: 'Description', content: <Description product={product} isLoading={isLoading} />, key: 1 },
+    {
+      title: 'Reviews',
+      content: <Comment reviews={product?.comments} productId={product?._id} isLoading={isLoading} />,
+      key: 2,
+    },
   ]
 
   const [value, setValue] = useState('0')
@@ -22,7 +25,7 @@ const AdditionalInfo = ({ product }) => {
   return (
     <Box sx={{ mt: 10 }}>
       <TabContext value={value}>
-        <Tabs onChange={handleChange} value={value} aria-label="product info tabs">
+        <Tabs onChange={handleChange} value={value} aria-label="product-info-tabs">
           {tabsData.map((tab, index) => {
             return <Tab sx={{ textTransform: 'capitalize' }} label={tab.title} value={index.toString()} key={tab.key} />
           })}
