@@ -6,7 +6,7 @@ import { AdditionalInfo, ProductDetailsCard } from './components'
 
 const ProductDetails = () => {
   const params = useParams()
-  const { data: product, error } = useSWR(`/products/${params.productId}`)
+  const { data: product, error, isLoading } = useSWR(`/products/${params.productId}`)
 
   return (
     <PageLayout error={error} data={product} container>
@@ -15,8 +15,8 @@ const ProductDetails = () => {
           mt: 5,
         }}
       >
-        <ProductDetailsCard product={product} />
-        <AdditionalInfo product={product} />
+        <ProductDetailsCard product={product} isLoading={isLoading} />
+        <AdditionalInfo product={product} isLoading={isLoading} />
       </Container>
     </PageLayout>
   )
