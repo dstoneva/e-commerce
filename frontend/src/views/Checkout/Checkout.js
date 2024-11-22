@@ -20,6 +20,7 @@ const Checkout = () => {
   const navigate = useNavigate()
 
   const [activeStep, setActiveStep] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -49,6 +50,7 @@ const Checkout = () => {
         return { product: item._id, quantity: item.quantity }
       })
 
+      setLoading(true)
       try {
         const { data } = await axios.post(`${API_URL}/checkouts/create`, { cart, ...values })
         enqueueSnackbar(data.message, {
@@ -58,6 +60,8 @@ const Checkout = () => {
         navigate(`${PageURLs.Order}/${data.id}`)
       } catch (error) {
         setError(error)
+      } finally {
+        setLoading(false)
       }
     },
   })
@@ -92,13 +96,11 @@ const Checkout = () => {
         <Grid container>
           <Grid item sm={12} display={{ sm: 'block', xs: 'none', m: 2 }}>
             <Stepper activeStep={activeStep} sx={{ px: 2 }}>
-              {steps.map((step, index) => {
-                return (
-                  <Step key={step.label}>
-                    <StepLabel>{step.label}</StepLabel>
-                  </Step>
-                )
-              })}
+              {steps.map((step, index) => (
+                <Step key={step.label}>
+                  <StepLabel>{step.label}</StepLabel>
+                </Step>
+              ))}
             </Stepper>
           </Grid>
           <Grid item xs={12}>
@@ -117,9 +119,17 @@ const Checkout = () => {
                   variant="contained"
                   onClick={handleNext}
                   color="primary"
-                  disabled={(activeStep !== 0 && !(formik.isValid && formik.dirty)) || originalCart.length === 0}
+                  disabled={
+                    loading || // Disable button if loading
+                    (activeStep !== 0 && !(formik.isValid && formik.dirty)) ||
+                    originalCart.length === 0
+                  }
                 >
-                  {activeStep === steps.length - 1 ? 'Place order' : `Proceed to ${steps[activeStep + 1].label}`}
+                  {activeStep === steps.length - 1
+                    ? loading
+                      ? 'Placing...'
+                      : 'Place order'
+                    : `Proceed to ${steps[activeStep + 1].label}`}
                 </Button>
               </Grid>
             </Grid>
@@ -127,8 +137,8 @@ const Checkout = () => {
         </Grid>
       ) : (
         <>
-          <Cart withoutFooter={true} />
-          <Typography align="center" vartiant="subtitle1" fontWeight="bold">
+          <Cart />
+          <Typography align="center" variant="subtitle1" fontWeight="bold">
             You will be redirected to the homepage in 5 seconds
           </Typography>
         </>
