@@ -15,7 +15,7 @@ const ProductDetails = () => {
           mt: 5,
         }}
       >
-        <ProductDetailsCard product={product} isLoading={isLoading} />
+        <ProductDetailsCard product={product} />
         <AdditionalInfo product={product} isLoading={isLoading} />
       </Container>
     </PageLayout>
