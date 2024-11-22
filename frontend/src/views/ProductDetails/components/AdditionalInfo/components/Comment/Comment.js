@@ -2,12 +2,21 @@ import { useState } from 'react'
 import { Typography, Box, Button, TextField, Rating } from '@mui/material'
 import { Review } from './components'
 import { useAuth } from 'core'
+import axios from 'axios'
+import { API_URL } from 'config'
 
-export default function Comment({ reviews }) {
+export default function Comment({ reviews, productId }) {
   const { user } = useAuth()
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
-  const [posts, setPosts] = useState(reviews)
+  const [posts, setPosts] = useState(
+    reviews.map((review) => ({
+      author: review.reviewerName,
+      date: new Date(review.date).toLocaleString(),
+      comment: review.comment,
+      rating: review.rating,
+    }))
+  )
 
   const handleRatingChange = (event) => {
     const rate = Number(event.target.value)
@@ -19,12 +28,35 @@ export default function Comment({ reviews }) {
     setComment(val)
   }
 
-  const doSubmit = () => {
-    const newPost = { author: user.name, date: 'now', comment, rating }
-    posts.push(newPost)
-    setRating(0)
-    setPosts(posts)
-    setComment('')
+  const doSubmit = async () => {
+    const newComment = {
+      rating,
+      comment,
+      reviewerName: user.name,
+      reviewerEmail: user.email,
+    }
+
+    try {
+      // Send the new comment to the backend
+      const response = await axios.post(`${API_URL}/products/${productId}/comments`, newComment)
+
+      if (response.status === 200) {
+        // Update the local state with the new comment
+        setPosts((prevPosts) => [
+          ...prevPosts,
+          {
+            author: newComment.reviewerName,
+            date: new Date().toLocaleString(), // Current time for the new comment
+            comment: newComment.comment,
+            rating: newComment.rating,
+          },
+        ])
+        setRating(0)
+        setComment('')
+      }
+    } catch (error) {
+      console.error('Error adding comment:', error)
+    }
   }
 
   return (
@@ -70,12 +102,7 @@ export default function Comment({ reviews }) {
             sx={{ marginBottom: 2 }}
           />
         </Box>
-        <Button
-          disabled={comment.trim() === '' || rating === 0 ? true : false}
-          onClick={doSubmit}
-          variant="contained"
-          color="primary"
-        >
+        <Button disabled={comment.trim() === '' || rating === 0} onClick={doSubmit} variant="contained" color="primary">
           Submit
         </Button>
       </Box>
