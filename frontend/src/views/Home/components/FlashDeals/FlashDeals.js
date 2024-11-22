@@ -6,9 +6,11 @@ import { PageLayout as Widget } from 'layouts/Main/components'
 import useSWR from 'swr'
 import Headline from '../Headline'
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt'
+import ResourceView from 'components/ResourceView/ResourceView'
+import ProductCardSkeleton from 'components/ProductCard/ProductCardSkeleton'
 
 const FlashDeals = () => {
-  const { data: products, error } = useSWR(`/products?productsPerPage=8`)
+  const { data: products, error, isLoading } = useSWR(`/products?productsPerPage=8`)
   const theme = useTheme()
 
   const settings = {
@@ -19,39 +21,28 @@ const FlashDeals = () => {
     slidesToScroll: 1,
     nextArrow: <SliderArrow right />,
     prevArrow: <SliderArrow />,
+    swipe: false,
     responsive: [
-      {
-        breakpoint: theme.breakpoints.values.xl,
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: theme.breakpoints.values.lg,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: theme.breakpoints.values.md,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: theme.breakpoints.values.sm,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-      {
-        breakpoint: theme.breakpoints.values.xs,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
+      { breakpoint: theme.breakpoints.values.xl, settings: { slidesToShow: 4 } },
+      { breakpoint: theme.breakpoints.values.lg, settings: { slidesToShow: 3 } },
+      { breakpoint: theme.breakpoints.values.md, settings: { slidesToShow: 2 } },
+      { breakpoint: theme.breakpoints.values.sm, settings: { slidesToShow: 1 } },
+      { breakpoint: theme.breakpoints.values.xs, settings: { slidesToShow: 1 } },
     ],
   }
+
+  // Define the items for the slider based on the loading or loaded state
+  const sliderItems = isLoading
+    ? Array.from({ length: 8 }).map((_, index) => (
+        <Grid item xs={12} xl={3} lg={4} md={6} sm={12} key={index}>
+          <ProductCardSkeleton />
+        </Grid>
+      ))
+    : products?.result.map((product) => (
+        <Grid item xs={12} xl={3} lg={4} md={6} sm={12} key={product._id}>
+          <ProductCard quickView product={product} />
+        </Grid>
+      ))
 
   return (
     <>
@@ -70,14 +61,24 @@ const FlashDeals = () => {
       >
         Flash Deals
       </Headline>
+      
       <Widget error={error} data={products}>
-        <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
-          {products?.result.map((product) => (
-            <Grid item xs={12} xl={3} lg={4} md={6} sm={12} key={product._id}>
-              <ProductCard quickView product={product} />
-            </Grid>
-          ))}
-        </Slider>
+        <ResourceView
+          isLoading={isLoading}
+          loadingComponent={
+            <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
+              {Array.from({ length: 8 }).map((_, index) => (
+                <Grid item xs={12} xl={3} lg={4} md={6} sm={12} key={index}>
+                  <ProductCardSkeleton />
+                </Grid>
+              ))}
+            </Slider>
+          }
+        >
+          <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
+            {sliderItems}
+          </Slider>
+        </ResourceView>
       </Widget>
     </>
   )
