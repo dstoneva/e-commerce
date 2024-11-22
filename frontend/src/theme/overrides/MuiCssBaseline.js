@@ -29,6 +29,21 @@ export default (theme) => ({
         paddingTop: 8,
         paddingBottom: 8,
       },
+      /* Custom Scrollbar Styles */
+      '::-webkit-scrollbar': {
+        width: '8px', // Width of the vertical scrollbar
+        height: '5px', // Height of the horizontal scrollbar
+      },
+      '::-webkit-scrollbar-track': {
+        background: '#f0f0f0', // Light background for contrast
+      },
+      '::-webkit-scrollbar-thumb': {
+        background: 'rgba(125, 138, 138, 0.2)', // Darker scrollbar handle
+        borderRadius: '4px', // Slight rounding for softer appearance
+      },
+      '::-webkit-scrollbar-thumb:hover': {
+        background: '#c2c2c2', // Darken on hover
+      },
     },
   },
-})
+});
