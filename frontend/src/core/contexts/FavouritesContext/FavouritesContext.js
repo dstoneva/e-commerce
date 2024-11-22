@@ -51,6 +51,7 @@ const favouritesReducer = (state, action) => {
         stock: product.stock,
         thumbnail: product.thumbnail,
         discountPercentage: product.discountPercentage,
+        rating: product.rating,
       }
       const favouritesWithNewItem = !isNewItem
         ? [...state.favourites]
@@ -106,6 +107,7 @@ const FavouritesProvider = ({ children }) => {
       : null,
     {
       refreshInterval: 86400000, // 24 hours
+      revalidateOnFocus: false,
     }
   )
 
