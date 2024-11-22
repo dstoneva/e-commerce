@@ -5,7 +5,6 @@ import theme from 'theme'
 import { SWRConfig } from 'swr'
 import axios from 'axios'
 import { API_URL } from 'config'
-import { CategoriesProvider } from './contexts/CategoriesContext'
 
 const fetcher = (url) => axios.get(`${API_URL}${url}`).then(({ data }) => data)
 
@@ -15,11 +14,11 @@ const Store = ({ children }) => {
       <SnackbarProvider maxSnack={3} autoHideDuration={1500} preventDuplicate>
         <SWRConfig value={{ fetcher }}>
           <AuthProvider>
-            <CategoriesProvider>
+            {/* <CategoriesProvider> */}
               <FavouritesProvider>
                 <CartProvider>{children}</CartProvider>
               </FavouritesProvider>
-            </CategoriesProvider>
+            {/* </CategoriesProvider> */}
           </AuthProvider>
         </SWRConfig>
       </SnackbarProvider>
