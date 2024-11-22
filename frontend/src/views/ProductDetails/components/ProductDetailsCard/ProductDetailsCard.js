@@ -1,6 +1,6 @@
-import { Typography, Box, CardMedia, Grid, Rating, Button, IconButton, Tooltip } from '@mui/material'
+import { Typography, Box, CardMedia, Grid, Rating, Button, IconButton, Tooltip, Skeleton } from '@mui/material'
 import { DisplayCurrency } from 'components'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useCart, useFavourites } from 'core'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
@@ -13,19 +13,42 @@ const ProductDetailsCard = ({ product }) => {
   const { isFavourite, addToFavourites, removeFromFavourites } = useFavourites()
 
   const [mainImage, setMainImage] = useState(0)
-  const changeImageHandler = (event, index) => {
+  const [imageLoaded, setImageLoaded] = useState(false)
+
+  const changeImageHandler = useCallback((event, index) => {
     setMainImage(index)
-  }
+    setImageLoaded(false) // Reset imageLoaded when thumbnail is changed
+  }, [])
+   
+  if (!product) return null
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>
         <Box display="flex" alignItems="center" flexDirection="column">
+          {!imageLoaded && (
+            <Skeleton
+              variant="rectangular"
+              width={300}
+              height={300}
+              sx={{ mb: 5, borderRadius: 2, position: 'absolute' }}
+            />
+          )}
           <CardMedia
-            alt={product.title}
             component="img"
+            alt={product.title}
             src={product.images[mainImage]}
-            sx={{ width: 300, height: 300, mb: 5, borderRadius: 2 }}
+            sx={{
+              width: 300,
+              height: 300,
+              mb: 5,
+              borderRadius: 2,
+              opacity: imageLoaded ? 1 : 0,
+              transition: 'opacity 0.3s ease-in-out',
+              position: 'relative',
+              objectFit: 'contain',
+            }}
+            onLoad={() => setImageLoaded(true)}
           />
           <Box
             sx={{
@@ -67,9 +90,11 @@ const ProductDetailsCard = ({ product }) => {
           <Typography variant="h4" fontWeight="bold">
             {product.title}
           </Typography>
-          <Typography>
-            Brand: <b>{product.brand}</b>
-          </Typography>
+          {product.brand && (
+            <Typography variant="subtitle">
+              Brand: <b>{product.brand}</b>
+            </Typography>
+          )}
           <Box display="flex" gap={1} alignItems="center">
             <Typography variant="subtitle">Rated:</Typography>
             <Rating value={product.rating} readOnly size="small" />
@@ -106,7 +131,7 @@ const ProductDetailsCard = ({ product }) => {
               </>
             ) : (
               <Button
-                disabled={product.stock === 0 ? true : false}
+                disabled={product.stock === 0}
                 onClick={() => addToCart(product)}
                 variant="contained"
                 color="primary"
@@ -124,7 +149,7 @@ const ProductDetailsCard = ({ product }) => {
                   }}
                   onClick={() => addToFavourites(product)}
                 >
-                  <FavoriteBorderOutlined size="medium"></FavoriteBorderOutlined>
+                  <FavoriteBorderOutlined size="medium" />
                 </IconButton>
               </Tooltip>
             ) : (
