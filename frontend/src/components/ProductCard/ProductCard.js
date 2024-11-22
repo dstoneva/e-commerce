@@ -62,8 +62,8 @@ const ProductCard = ({ product, center = false, quickView }) => {
             <IconButton
               onClick={() => handleOpen()}
               sx={{
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.8)' },
+                backgroundColor: 'rgba(75, 86, 107, 0.04)',
+                '&:hover': { backgroundColor: 'rgba(75, 86, 107, 0.07)' },
               }}
             >
               <RemoveRedEye fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />
@@ -74,8 +74,8 @@ const ProductCard = ({ product, center = false, quickView }) => {
           <IconButton
             onClick={() => addToFavourites(product)}
             sx={{
-              backgroundColor: 'rgba(255, 255, 255, 0.8)',
-              '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.8)' },
+              backgroundColor: 'rgba(75, 86, 107, 0.04)',
+              '&:hover': { backgroundColor: 'rgba(75, 86, 107, 0.07)' },
             }}
           >
             <FavoriteBorder fontSize="small" sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />
@@ -84,8 +84,8 @@ const ProductCard = ({ product, center = false, quickView }) => {
           <IconButton
             onClick={() => removeFromFavourites(product._id)}
             sx={{
-              backgroundColor: 'rgba(255, 255, 255, 0.8)',
-              '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.8)' },
+              backgroundColor: 'rgba(75, 86, 107, 0.04)',
+              '&:hover': { backgroundColor: 'rgba(75, 86, 107, 0.07)' },
             }}
           >
             <FavoriteIcon fontSize="small" sx={{ color: 'crimson' }} />
@@ -103,7 +103,7 @@ const ProductCard = ({ product, center = false, quickView }) => {
         />
       )}
       <CardMedia
-        sx={{ cursor: 'pointer' }}
+        sx={{ cursor: 'pointer', backgroundColor: 'white', objectFit: 'contain', overflowClipMargin: 'unset' }}
         loading="eager"
         component="img"
         height={300}
@@ -119,7 +119,7 @@ const ProductCard = ({ product, center = false, quickView }) => {
               variant="h3"
               component="div"
               noWrap
-              sx={{ fontSize: '14px !important', fontWeight: 600, mb: 1 }}
+              sx={{ fontSize: '14px !important', fontWeight: 600, mb: 1, maxWidth: '12rem' }}
             >
               {product.title}
             </Typography>
