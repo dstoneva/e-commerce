@@ -50,9 +50,9 @@ const Footer = () => {
   ]
 
   return (
-    <Box component="footer" sx={{ bgcolor: '#222935', mt: 10 }}>
-      <Container>
-        <Grid container spacing={2} sx={{ py: 10 }}>
+    <Box component="footer" sx={{ bgcolor: '#222935', width: '100%', height: {xs: 'auto', lg: '300px'}}}>
+      <Container sx={{height: '100%'}}>
+        <Grid container spacing={2} sx={{ py: 5, px: 2 }}>
           <Grid item lg={4} md={6} sm={6} xs={12}>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <Box component="img" src="/images/logo.svg" alt="logo" sx={{ height: 50, mb: 2 }} />
