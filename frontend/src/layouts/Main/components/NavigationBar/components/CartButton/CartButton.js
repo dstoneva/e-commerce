@@ -14,7 +14,7 @@ import {
 } from '@mui/material'
 import { DisplayCurrency } from 'components'
 import { useCart } from 'core'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useCallback } from 'react'
 import RemoveIcon from '@mui/icons-material/Remove'
 import AddIcon from '@mui/icons-material/Add'
 import { useNavigate } from 'react-router-dom'
@@ -25,12 +25,25 @@ const CartButton = () => {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
 
-  // Separate functions for opening and closing the drawer
-  const openDrawer = () => setIsOpen(true)
-  const closeDrawer = (event) => {
+  const openDrawer = useCallback(() => setIsOpen(true), [])
+  const closeDrawer = useCallback((event) => {
     if (event?.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return
     setIsOpen(false)
-  }
+  }, [])
+
+  const handleRemove = useCallback(
+    (productId) => {
+      removeFromCart(productId)
+    },
+    [removeFromCart]
+  )
+
+  const handleAdd = useCallback(
+    (product) => {
+      addToCart(product)
+    },
+    [addToCart]
+  )
 
   return (
     <div>
@@ -46,9 +59,13 @@ const CartButton = () => {
         anchor="right"
         open={isOpen}
         onClose={closeDrawer}
-        onClick={(event) => event.stopPropagation()}
         PaperProps={{
-          sx: { display: 'flex', flexDirection: 'column', justifyContent: 'space-between' },
+          sx: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            maxWidth: { xs: 320, sm: 400 },
+          },
         }}
       >
         <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={closeDrawer}>
@@ -56,9 +73,9 @@ const CartButton = () => {
         </IconButton>
         <Box>
           <Box display="flex" alignItems="center" p={2}>
-            <ShoppingBag color="secondary" />{' '}
+            <ShoppingBag color="secondary" />
             <Typography variant="body1" color="secondary" sx={{ ml: 1 }}>
-              {quantity} {quantity < 2 ? ' item' : ' items'}
+              {quantity} {quantity < 2 ? 'item' : 'items'}
             </Typography>
           </Box>
           <Divider />
@@ -97,12 +114,12 @@ const CartButton = () => {
                         </Typography>
                       </Box>
                       <Box display="flex" alignItems="center">
-                        <IconButton onClick={() => removeFromCart(product._id)} size="small">
+                        <IconButton onClick={() => handleRemove(product._id)} size="small">
                           <RemoveIcon />
                         </IconButton>
                         <Typography variant="body1">{product.quantity}</Typography>
                         <IconButton
-                          onClick={() => addToCart(product)}
+                          onClick={() => handleAdd(product)}
                           disabled={product.quantity >= product.stock}
                           size="small"
                         >
@@ -127,7 +144,7 @@ const CartButton = () => {
             onClick={(event) => {
               event.stopPropagation()
               setIsOpen(false)
-              setTimeout(() => navigate(PageURLs.Checkout), 200) // Navigate after drawer is fully closed
+              setTimeout(() => navigate(PageURLs.Checkout), 200)
             }}
           >
             Checkout (<DisplayCurrency number={totalPrice} />)
@@ -141,7 +158,7 @@ const CartButton = () => {
             onClick={(event) => {
               event.stopPropagation()
               setIsOpen(false)
-              setTimeout(() => navigate(PageURLs.Cart), 200) // Navigate after drawer is fully closed
+              setTimeout(() => navigate(PageURLs.Cart), 200)
             }}
           >
             View cart
