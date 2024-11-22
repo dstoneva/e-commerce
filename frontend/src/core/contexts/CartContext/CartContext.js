@@ -138,6 +138,7 @@ const CartProvider = ({ children }) => {
     cart.length && isAuthenticated ? `/products/by-ids?${queryParamAsArray('productIds', itemIds)}` : null,
     {
       refreshInterval: 86400000, // 24 hours
+      revalidateOnFocus: false,
     }
   )
 
