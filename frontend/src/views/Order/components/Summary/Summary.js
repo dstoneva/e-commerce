@@ -3,11 +3,11 @@ import { DisplayCurrency } from 'components'
 
 const Summary = ({ payment, cart }) => {
   const priceWithoutDiscount = cart
-    .map((product) => +(product?.product?.price * product?.quantity).toFixed(2))
+    ?.map((product) => +(product?.product?.price * product?.quantity).toFixed(2))
     .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 
   const totalPice = cart
-    .map(
+    ?.map(
       (product) =>
         +(
           product?.product?.price * product?.quantity -
