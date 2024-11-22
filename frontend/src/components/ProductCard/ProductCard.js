@@ -104,7 +104,7 @@ const ProductCard = ({ product, center = false, quickView }) => {
       )}
       <CardMedia
         sx={{ cursor: 'pointer', backgroundColor: 'white', objectFit: 'contain', overflowClipMargin: 'unset' }}
-        loading="eager"
+        loading="lazy"
         component="img"
         height={300}
         image={product.thumbnail}
