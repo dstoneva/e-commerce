@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Typography, Tooltip, Box } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
+import { ConfirmationDialog } from 'components'
 
 const CartActionsButton = ({
   inCart,
@@ -16,6 +17,26 @@ const CartActionsButton = ({
   initialText = 'Add to cart',
   layoutStyle = 'button-with-text',
 }) => {
+  const [openDialog, setOpenDialog] = useState(false)
+
+  const handleRemoveClick = () => {
+    if (quantity === 1) {
+      // Open confirmation dialog if this is the last item in the cart
+      setOpenDialog(true)
+    } else {
+      onRemove()
+    }
+  }
+
+  const handleConfirmRemove = () => {
+    setOpenDialog(false)
+    onRemove()
+  }
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false)
+  }
+
   const renderContent = () => {
     switch (layoutStyle) {
       case 'button-with-text':
@@ -32,7 +53,7 @@ const CartActionsButton = ({
               <>
                 <Button
                   color="primary"
-                  onClick={onRemove}
+                  onClick={handleRemoveClick}
                   variant="outlined"
                   size={buttonSize}
                   sx={{ minWidth: 0, p: '3px' }}
@@ -80,7 +101,7 @@ const CartActionsButton = ({
               <>
                 <Button
                   color="primary"
-                  onClick={onRemove}
+                  onClick={handleRemoveClick}
                   variant="outlined"
                   size={buttonSize}
                   sx={{ minWidth: 0, p: '3px' }}
@@ -117,7 +138,20 @@ const CartActionsButton = ({
     }
   }
 
-  return renderContent()
+  return (
+    <>
+      <ConfirmationDialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        onConfirm={handleConfirmRemove}
+        title="Remove Item"
+        description="Are you sure you want to remove this item from the cart?"
+        confirmText="Remove"
+        cancelText="Cancel"
+      />
+      {renderContent()}
+    </>
+  )
 }
 
 CartActionsButton.propTypes = {
