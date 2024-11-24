@@ -1,11 +1,10 @@
-import { Grid, Box, Typography, Rating, Divider, Button, Skeleton } from '@mui/material'
+import { Grid, Box, Typography, Rating, Divider, Skeleton } from '@mui/material'
 import { useState } from 'react'
 import DisplayCurrency from 'components/DisplayCurrency'
-import AddIcon from '@mui/icons-material/Add'
-import RemoveIcon from '@mui/icons-material/Remove'
 import Slider from 'react-slick'
 import SliderArrow from 'components/SliderArrow'
 import { useCart } from 'core'
+import { CartActionsButton } from 'components'
 
 const QuickView = ({ product }) => {
   const { getFinalPrice, itemIds, getQuantity, addToCart, removeFromCart } = useCart()
@@ -70,33 +69,17 @@ const QuickView = ({ product }) => {
     const isInCart = itemIds.includes(product._id)
     const quantity = getQuantity(product._id)
 
-    return isInCart ? (
-      <Box display="flex" gap={1}>
-        <Button
-          color="primary"
-          onClick={() => removeFromCart(product._id)}
-          variant="outlined"
-          sx={{ minWidth: 0, p: '3px' }}
-        >
-          <RemoveIcon fontSize="small" />
-        </Button>
-        <Typography fontWeight={600} fontSize={20} textAlign="center">
-          {quantity}
-        </Typography>
-        <Button color="primary" variant="outlined" sx={{ minWidth: 0, p: '3px' }} onClick={() => addToCart(product)}>
-          <AddIcon fontSize="small" />
-        </Button>
-      </Box>
-    ) : (
-      <Button
-        disabled={!product.stock}
-        sx={{ maxWidth: '8rem' }}
-        onClick={() => addToCart(product)}
-        variant="contained"
-        color="primary"
-      >
-        {product.stock > 0 ? 'Add to cart' : 'Out of stock'}
-      </Button>
+    return (
+      <CartActionsButton
+        inCart={isInCart}
+        quantity={quantity}
+        stock={product.stock}
+        onAdd={() => addToCart(product)}
+        onRemove={() => removeFromCart(product._id)}
+        layout="row"
+        buttonSize="medium"
+        layoutStyle="button-with-text"
+      />
     )
   }
 

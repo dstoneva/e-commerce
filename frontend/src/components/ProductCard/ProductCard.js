@@ -7,20 +7,17 @@ import {
   Tooltip,
   Typography,
   Box,
-  Button,
   Chip,
   IconButton,
 } from '@mui/material'
 import { useCart, useFavourites } from 'core'
-import AddIcon from '@mui/icons-material/Add'
-import RemoveIcon from '@mui/icons-material/Remove'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import { DEFAULT_LOCALIZATION } from 'config'
 import { FavoriteBorder, RemoveRedEye } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { ProductDialog, DisplayCurrency } from 'components'
+import { CartActionsButton } from 'components'
 
 const ProductCard = ({ product, center = false, quickView }) => {
   const { addToCart, itemIds, removeFromCart, getQuantity } = useCart()
@@ -145,35 +142,16 @@ const ProductCard = ({ product, center = false, quickView }) => {
         <CardActions
           sx={{ width: 30, p: 0, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'column' }}
         >
-          {itemIds.includes(product._id) && (
-            <>
-              <Button
-                color="primary"
-                onClick={() => removeFromCart(product._id)}
-                variant="outlined"
-                sx={{ minWidth: 0, p: '3px' }}
-              >
-                <RemoveIcon fontSize="small" />
-              </Button>
-              <Typography fontWeight={600}>{getQuantity(product._id)}</Typography>
-            </>
-          )}
-          {product.stock > 0 ? (
-            <Button
-              color="primary"
-              onClick={() => addToCart(product)}
-              variant="outlined"
-              sx={{ minWidth: 0, p: '3px', m: '0 !important' }}
-            >
-              <AddIcon fontSize="small" />
-            </Button>
-          ) : (
-            <Tooltip title="Out Of Stock">
-              <Button color="primary" variant="outlined" sx={{ minWidth: 0, p: '3px', m: '0 !important' }}>
-                <LocalShippingIcon fontSize="small" />
-              </Button>
-            </Tooltip>
-          )}
+          <CartActionsButton
+            inCart={itemIds.includes(product._id)}
+            quantity={getQuantity(product._id)}
+            stock={product.stock}
+            onAdd={() => addToCart(product)}
+            onRemove={() => removeFromCart(product._id)}
+            layout="column"
+            buttonSize="small"
+            layoutStyle="icon-buttons"
+          />
         </CardActions>
       </Box>
     </Card>
