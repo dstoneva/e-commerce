@@ -44,7 +44,14 @@ const RoutesComponent = () => {
       }
     >
       <Routes>
-        <Route path="/" element={<MainLayout />}>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <MainLayout isSuspense={false} />
+            </PrivateRoute>
+          }
+        >
           <Route
             index
             element={
