@@ -52,6 +52,7 @@ const CartActionsButton = ({
             {inCart && stock > 0 ? (
               <>
                 <Button
+                  aria-label="remove-from-cart"
                   color="primary"
                   onClick={handleRemoveClick}
                   variant="outlined"
@@ -64,6 +65,7 @@ const CartActionsButton = ({
                   {quantity}
                 </Typography>
                 <Button
+                  about="add-to-cart"
                   color="primary"
                   onClick={onAdd}
                   variant="outlined"
@@ -75,6 +77,7 @@ const CartActionsButton = ({
               </>
             ) : (
               <Button
+                aria-label="add-to-cart"
                 color="primary"
                 onClick={onAdd}
                 variant="contained"
@@ -100,6 +103,7 @@ const CartActionsButton = ({
             {inCart ? (
               <>
                 <Button
+                  about="remove-from-cart"
                   color="primary"
                   onClick={handleRemoveClick}
                   variant="outlined"
@@ -115,6 +119,7 @@ const CartActionsButton = ({
             ) : null}
             {stock > 0 ? (
               <Button
+                aria-label="add-to-cart"
                 color="primary"
                 onClick={onAdd}
                 variant="outlined"
@@ -125,7 +130,12 @@ const CartActionsButton = ({
               </Button>
             ) : (
               <Tooltip title="Out Of Stock">
-                <Button color="primary" variant="outlined" sx={{ minWidth: 0, p: '3px', m: '0 !important' }}>
+                <Button
+                  aria-label="out-of-stock"
+                  color="primary"
+                  variant="outlined"
+                  sx={{ minWidth: 0, p: '3px', m: '0 !important' }}
+                >
                   <LocalShippingIcon fontSize="small" />
                 </Button>
               </Tooltip>
