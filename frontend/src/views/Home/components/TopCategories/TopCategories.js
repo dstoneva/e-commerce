@@ -95,7 +95,7 @@ const TopCategories = () => {
                       }}
                       label="3k orders this week"
                     />
-                    <CardMedia component="img" height="120" image="/images/category-1.webp" alt="cat" />
+                    <CardMedia loading='lazy' component="img" height="120" image="/images/category-1.webp" alt="cat" />
                   </Paper>
                 </CardActionArea>
               </CardContent>
