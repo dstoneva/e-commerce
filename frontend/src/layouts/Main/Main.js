@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Mail, Phone } from '@mui/icons-material'
-import { Box, CircularProgress, Container, Divider, Link, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { ErrorBoundary } from 'components'
 import { Outlet } from 'react-router-dom/dist'
-import { Footer, NavigationBar } from './components'
+import { Footer, LoadingOverlay, NavigationBar, TopInfoBar } from './components'
 
 const Main = ({ isSuspense }) => {
   const [showContent, setShowContent] = useState(false)
@@ -27,64 +26,7 @@ const Main = ({ isSuspense }) => {
         }}
       >
         {/* Top Info Bar */}
-        <Box
-          sx={{
-            height: 40,
-            bgcolor: 'secondary.main',
-            display: { xs: 'none', md: 'flex' },
-            alignItems: 'center',
-          }}
-        >
-          <Container
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Box display="flex">
-              <Typography
-                component="div"
-                sx={{ display: 'flex', alignItems: 'center', mr: 2 }}
-                variant="overline"
-                color="background.default"
-              >
-                <Phone sx={{ mr: 1 }} fontSize="small" />
-                +88012 3456 7894
-              </Typography>
-              <Typography
-                component="div"
-                sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-                variant="overline"
-                color="background.default"
-                onClick={() => (window.location = 'mailto:support@email.com')}
-              >
-                <Mail sx={{ mr: 1 }} fontSize="small" />
-                support@email.com
-              </Typography>
-            </Box>
-            <Box>
-              <Typography
-                variant="overline"
-                sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-                component="div"
-              >
-                <Link href="#" color="background.default">
-                  Privacy Policy
-                </Link>
-                <Divider
-                  flexItem
-                  variant="middle"
-                  orientation="vertical"
-                  sx={{ mx: 1.5, borderColor: 'background.default' }}
-                />
-                <Link href="#" color="background.default">
-                  Terms and conditions
-                </Link>
-              </Typography>
-            </Box>
-          </Container>
-        </Box>
+        <TopInfoBar />
 
         {/* Navigation Bar */}
         <NavigationBar />
@@ -107,27 +49,7 @@ const Main = ({ isSuspense }) => {
         <Footer />
 
         {/* Full-page loading spinner overlay */}
-        {isSuspense && (
-          <Box
-            sx={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'white',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 9999,
-              transition: 'opacity 0.3s ease',
-              opacity: !showContent ? 1 : 0, 
-              pointerEvents: 'none', 
-            }}
-          >
-            <CircularProgress />
-          </Box>
-        )}
+        {isSuspense && <LoadingOverlay />}
       </Box>
     </ErrorBoundary>
   )
