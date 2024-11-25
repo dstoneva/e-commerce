@@ -30,6 +30,7 @@ const CategoriesProvider = ({ children }) => {
   const { data, error } = useSWR(isAuthenticated ? `/categories` : null, {
     refreshInterval: 86400000, // 24 hours
     revalidateOnFocus: false,
+    dedupingInterval: 60000,
   })
 
   useEffect(() => {
