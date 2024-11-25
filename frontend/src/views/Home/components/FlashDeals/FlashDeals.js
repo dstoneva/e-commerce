@@ -2,7 +2,6 @@ import { ArrowRight } from '@mui/icons-material'
 import { Button, Grid, Link, useTheme } from '@mui/material'
 import Slider from 'react-slick'
 import { ProductCard, SliderArrow } from 'components'
-import { PageLayout as Widget } from 'layouts/Main/components'
 import useSWR from 'swr'
 import Headline from '../Headline'
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt'
@@ -31,19 +30,6 @@ const FlashDeals = () => {
     ],
   }
 
-  // Define the items for the slider based on the loading or loaded state
-  const sliderItems = isLoading
-    ? Array.from({ length: 8 }).map((_, index) => (
-        <Grid item xs={12} xl={3} lg={4} md={6} sm={12} key={index}>
-          <ProductCardSkeleton />
-        </Grid>
-      ))
-    : products?.result.map((product) => (
-        <Grid item xs={12} xl={3} lg={4} md={6} sm={12} key={product._id}>
-          <ProductCard quickView product={product} />
-        </Grid>
-      ))
-
   return (
     <>
       <Headline
@@ -61,25 +47,28 @@ const FlashDeals = () => {
       >
         Flash Deals
       </Headline>
-      
-      <Widget error={error} data={products}>
-        <ResourceView
-          isLoading={isLoading}
-          loadingComponent={
-            <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
-              {Array.from({ length: 8 }).map((_, index) => (
-                <Grid item xs={12} xl={3} lg={4} md={6} sm={12} key={index}>
-                  <ProductCardSkeleton />
-                </Grid>
-              ))}
-            </Slider>
-          }
-        >
+
+      <ResourceView
+        isLoading={isLoading}
+        isError={error}
+        loadingComponent={
           <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
-            {sliderItems}
+            {Array.from({ length: 8 }).map((_, index) => (
+              <Grid item xs={12} xl={3} lg={4} md={6} sm={12} key={index}>
+                <ProductCardSkeleton />
+              </Grid>
+            ))}
           </Slider>
-        </ResourceView>
-      </Widget>
+        }
+      >
+        <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
+          {products?.result.map((product) => (
+            <Grid item xs={12} xl={3} lg={4} md={6} sm={12} key={product._id}>
+              <ProductCard quickView product={product} />
+            </Grid>
+          ))}
+        </Slider>
+      </ResourceView>
     </>
   )
 }
