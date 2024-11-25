@@ -29,7 +29,7 @@ const Cart = () => {
         </Grid>
       ) : cart.length < 1 ? (
         <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column" gap={2} height={450}>
-          <Box component="img" loading="eager" src="/images/cart.webp" alt="Cart" height={200} />
+          <Box component="img" loading="lazy" src="/images/cart.webp" alt="Cart" height={200} />
           <Typography align="center" variant="h4">
             Your cart is currently empty!
           </Typography>
