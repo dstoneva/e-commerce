@@ -1,4 +1,4 @@
-import { Skeleton, Grid, Box, Typography, Button } from '@mui/material';
+import { Skeleton, Grid, Box, Typography, Button } from '@mui/material'
 
 const BannerSlide = ({
   title,
@@ -23,7 +23,7 @@ const BannerSlide = ({
       paddingY: 4,
       paddingX: 3,
       maxHeight: { xs: 'auto', md: 450 },
-      minHeight: 400, 
+      minHeight: 400,
       ...containerProps.sx,
     }}
     {...containerProps}
@@ -80,7 +80,7 @@ const BannerSlide = ({
             component="img"
             src={imageUrl}
             alt={altText}
-            loading="eager"
+            loading="lazy"
             onLoad={(e) => e.target.classList.add('loaded')}
             sx={{
               display: 'block',
@@ -101,4 +101,4 @@ const BannerSlide = ({
   </Grid>
 );
 
-export default BannerSlide;
+export default BannerSlide
