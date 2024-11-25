@@ -6,7 +6,11 @@ import { AdditionalInfo, ProductDetailsCard } from './components'
 
 const ProductDetails = () => {
   const params = useParams()
-  const { data: product, error, isLoading } = useSWR(`/products/${params.productId}`)
+  const {
+    data: product,
+    error,
+    isLoading,
+  } = useSWR(`/products/${params.productId}`, { dedupingInterval: 60000 })
 
   return (
     <PageLayout error={error} data={product} container>
