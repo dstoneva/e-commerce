@@ -1,5 +1,5 @@
 import { Container, Grid } from '@mui/material'
-import { PageLayout } from 'layouts/Main/components'
+import { useMemo } from 'react'
 import {
   Carousel,
   NewArrivals,
@@ -7,45 +7,15 @@ import {
   TopRatings,
   FeaturedBrands,
   ProductList,
-  Delivery,
   FlashDeals,
   ScrollToTopButton,
   BannerSlide,
+  Delivery,
 } from './components'
-
-const bannerSlides = [
-  <BannerSlide
-    title="50% Off For Your First Shopping"
-    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis."
-    buttonText="Shop Now"
-    imageUrl="https://bazaar.ui-lib.com/assets/images/products/nike-black.png"
-    altText="Nike black"
-    onButtonClick={() => console.log('Navigating to shop now')}
-    imageProps={{
-      sx: {
-        height: { xs: 320, sm: 'auto' },
-        maxHeight: { xs: 320, sm: 350, md: 375, lg: 400 },
-        width: { xs: '100%' },
-        objectFit: 'contain',
-      },
-    }}
-  />,
-  <BannerSlide
-    title="Exclusive Winter Sale - Up to 70% Off!"
-    description="Explore our exclusive deals and discounts for the summer season. Don’t miss out on great prices!"
-    imageUrl="/images/winter-sale.webp"
-    altText="Winter Sale"
-    imageProps={{
-      sx: {
-        height: { xs: 320, sm: 'auto' },
-        width: { xs: '100%' },
-        objectFit: 'contain',
-      },
-    }}
-  />,
-]
+import { bannerData } from './data/data'
 
 const Home = () => {
+  const bannerSlides = useMemo(() => bannerData.map((slide, index) => <BannerSlide key={index} {...slide} />), [])
   return (
     <>
       <Carousel
@@ -56,7 +26,7 @@ const Home = () => {
         containerStyles={{ backgroundColor: 'background.white' }}
         slideStyles={{ my: 2 }}
       />{' '}
-      <Container>
+      <Container sx={{ py: 4 }}>
         <FlashDeals />
         <TopCategories />
         <Grid container spacing={4} sx={{ my: 1 }}>
@@ -70,7 +40,7 @@ const Home = () => {
             <NewArrivals />
           </Grid>
           <Grid item md={12} xs={12}>
-            <ProductList headline="More for you" productsNum={12} pageNum={2} />
+            <ProductList headline="More for you" productsNum={8} pageNum={2} />
           </Grid>
           <Grid item lg={12} xl={12}>
             <Delivery />
