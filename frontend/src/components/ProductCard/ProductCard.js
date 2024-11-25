@@ -57,6 +57,7 @@ const ProductCard = ({ product, center = false, quickView }) => {
           <>
             <ProductDialog isDialogOpened={isOpen} product={product} handleCloseDialog={() => setIsOpen(false)} />
             <IconButton
+              aria-label="quick-view"
               onClick={() => handleOpen()}
               sx={{
                 backgroundColor: 'rgba(75, 86, 107, 0.04)',
@@ -69,6 +70,7 @@ const ProductCard = ({ product, center = false, quickView }) => {
         )}
         {!isFavourite(product._id) ? (
           <IconButton
+            aria-label="add-to-favourites"
             onClick={() => addToFavourites(product)}
             sx={{
               backgroundColor: 'rgba(75, 86, 107, 0.04)',
@@ -79,6 +81,7 @@ const ProductCard = ({ product, center = false, quickView }) => {
           </IconButton>
         ) : (
           <IconButton
+            aria-label="remove-from-favourites"
             onClick={() => removeFromFavourites(product._id)}
             sx={{
               backgroundColor: 'rgba(75, 86, 107, 0.04)',
