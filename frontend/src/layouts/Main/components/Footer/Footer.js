@@ -1,57 +1,12 @@
 import { Box } from '@mui/system'
 import { Container, Grid, Typography, Link } from '@mui/material'
 import { AppDownloadButton } from './components'
+import { footerData } from 'views/Home/data/data'
 
 const Footer = () => {
-  const footerData = [
-    {
-      columnTitle: 'About us',
-      columnLinks: ['Careers', 'Our Stores', 'Our Cares', 'Terms & Conditions', 'Privacy Policy'],
-      sizing: {
-        xs: 12,
-        sm: 6,
-        md: 6,
-        lg: 2,
-      },
-      key: 1,
-    },
-    {
-      columnTitle: 'Customer Care',
-      columnLinks: [
-        'Help Center',
-        'How To Buy',
-        'Track Your Order',
-        'Corporate & Bulk Purchasing',
-        'Returns & Refunds',
-      ],
-      sizing: {
-        xs: 12,
-        sm: 6,
-        md: 6,
-        lg: 3,
-      },
-      key: 2,
-    },
-    {
-      columnTitle: 'Contact Us',
-      columnLinks: [
-        '70 Washington Square South, New York, NY 10012, United States',
-        'Email: uilib.help@gmail.com',
-        'Phone: +1 1123 456 780',
-      ],
-      sizing: {
-        xs: 12,
-        sm: 6,
-        md: 6,
-        lg: 3,
-      },
-      key: 3,
-    },
-  ]
-
   return (
-    <Box component="footer" sx={{ bgcolor: '#222935', width: '100%', height: {xs: 'auto', lg: '300px'}}}>
-      <Container sx={{height: '100%'}}>
+    <Box component="footer" sx={{ bgcolor: '#222935', width: '100%', height: { xs: 'auto', lg: '300px' } }}>
+      <Container sx={{ height: '100%' }}>
         <Grid container spacing={2} sx={{ py: 5, px: 2 }}>
           <Grid item lg={4} md={6} sm={6} xs={12}>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
