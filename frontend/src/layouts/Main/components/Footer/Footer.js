@@ -5,7 +5,7 @@ import { footerData } from 'views/Home/data/data'
 
 const Footer = () => {
   return (
-    <Box component="footer" sx={{ bgcolor: '#222935', width: '100%', height: { xs: 'auto', lg: '300px' } }}>
+    <Box component="footer" sx={{ bgcolor: '#222935', width: '100%', height: { xs: 'auto', lg: '320px' } }}>
       <Container sx={{ height: '100%' }}>
         <Grid container spacing={2} sx={{ py: 5, px: 2 }}>
           <Grid item lg={4} md={6} sm={6} xs={12}>
