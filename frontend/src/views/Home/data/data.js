@@ -18,7 +18,7 @@ export const bannerData = [
   },
   {
     title: 'Exclusive Winter Sale - Up to 70% Off!',
-    description: 'Explore our exclusive deals and discounts for the summer season. Don’t miss out on great prices!',
+    description: 'Explore our exclusive deals and discounts for the winter season. Don’t miss out on great prices!',
     imageUrl: '/images/winter-sale.webp',
     altText: 'Winter Sale',
     imageProps: {
