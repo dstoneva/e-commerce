@@ -1,6 +1,5 @@
 import { Grid, useMediaQuery, Typography, Box, Link, Skeleton, Container } from '@mui/material'
 import { useCart } from 'core'
-import { CartProduct } from './components'
 import { ProductCard, Subtotal, SideMenu } from 'components'
 import { useLocation } from 'react-router-dom'
 
@@ -43,7 +42,7 @@ const Cart = () => {
           <Grid item xs={12} md={8} lg={8}>
             {cart.map((product) =>
               !isMobile ? (
-                <CartProduct key={product._id} product={product} />
+                <ProductCard key={product._id} product={product} inCart />
               ) : (
                 <ProductCard key={product._id} product={product} />
               )
