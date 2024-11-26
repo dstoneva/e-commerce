@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Typography, Tooltip, Box } from '@mui/material'
+import { Button, Typography, Tooltip, Box, IconButton } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import { ConfirmationDialog } from 'components'
+import { Add, Remove } from '@mui/icons-material'
 
 const CartActionsButton = ({
   inCart,
@@ -82,7 +83,7 @@ const CartActionsButton = ({
                 onClick={onAdd}
                 variant="contained"
                 size={buttonSize}
-                disabled={stock <= 0}
+                disabled={quantity >= stock}
                 sx={{ maxWidth: '8rem' }}
               >
                 {stock > 0 ? initialText : 'Out of stock'}
@@ -124,6 +125,7 @@ const CartActionsButton = ({
                 onClick={onAdd}
                 variant="outlined"
                 size={buttonSize}
+                disabled={quantity >= stock}
                 sx={{ minWidth: 0, p: '3px' }}
               >
                 <AddIcon fontSize={buttonSize} />
@@ -140,6 +142,19 @@ const CartActionsButton = ({
                 </Button>
               </Tooltip>
             )}
+          </Box>
+        )
+
+      case 'compact-icon-buttons':
+        return (
+          <Box display="flex" alignItems="center">
+            <IconButton onClick={handleRemoveClick} size="small">
+              <Remove />
+            </IconButton>
+            <Typography variant="body1">{quantity}</Typography>
+            <IconButton onClick={onAdd} disabled={quantity >= stock} size="small">
+              <Add />
+            </IconButton>
           </Box>
         )
 
@@ -173,7 +188,7 @@ CartActionsButton.propTypes = {
   layout: PropTypes.oneOf(['column', 'row']),
   buttonSize: PropTypes.oneOf(['small', 'medium', 'large']),
   initialText: PropTypes.string,
-  layoutStyle: PropTypes.oneOf(['button-with-text', 'icon-buttons']),
+  layoutStyle: PropTypes.oneOf(['button-with-text', 'icon-buttons', 'compact-icon-buttons']),
 }
 
 export default CartActionsButton
