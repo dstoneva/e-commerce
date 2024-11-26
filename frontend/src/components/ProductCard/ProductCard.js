@@ -76,6 +76,7 @@ const ProductCard = ({ product, inCart = false, inCartDrawer = false, quickView 
                 <Typography variant="overline">{renderPrice()}</Typography>
               </Box>
               <CartActionsButton
+                inCart={itemIds.includes(product._id)}
                 layoutStyle="compact-icon-buttons"
                 stock={product.stock}
                 quantity={getQuantity(product._id)}
@@ -99,6 +100,7 @@ const ProductCard = ({ product, inCart = false, inCartDrawer = false, quickView 
           <Typography variant="h6">{product.title}</Typography>
           {renderPrice()}
           <CartActionsButton
+            inCart={itemIds.includes(product._id)}
             layoutStyle="compact-icon-buttons"
             stock={product.stock}
             quantity={getQuantity(product._id)}
