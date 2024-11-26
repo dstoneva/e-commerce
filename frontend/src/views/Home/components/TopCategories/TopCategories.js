@@ -10,12 +10,13 @@ const TopCategories = () => {
 
   const settings = {
     dots: false,
-    infinite: true,
-    speed: 500,
+    infinite: false,
+    speed: 300,
     slidesToShow: 3,
     slidesToScroll: 1,
     nextArrow: <SliderArrow right />,
     prevArrow: <SliderArrow />,
+    lazyLoad: 'ondemand',
     responsive: [
       {
         breakpoint: theme.breakpoints.values.lg,
@@ -62,8 +63,8 @@ const TopCategories = () => {
       >
         Top Categories
       </Headline>
-      <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
-        {[...Array(6)].map((item, i) => (
+      <Slider {...settings}>
+        {[...Array(4)].map((item, i) => (
           <Grid item xs={12} sm={12} md={2} lg={3} key={i}>
             <Card
               elevation={0}
@@ -82,7 +83,6 @@ const TopCategories = () => {
                       label="Headphones"
                     />
                     <Chip
-                      color="secondary"
                       size="small"
                       sx={{
                         px: 0.5,
@@ -90,12 +90,12 @@ const TopCategories = () => {
                         top: 10,
                         right: 10,
                         fontWeight: 600,
-                        bgcolor: 'action.selected',
+                        bgcolor: 'background.default',
                         color: 'text.primary',
                       }}
                       label="3k orders this week"
                     />
-                    <CardMedia loading='lazy' component="img" height="120" image="/images/category-1.webp" alt="cat" />
+                    <CardMedia loading="lazy" component="img" height="120" image="/images/category-1.webp" alt="cat" />
                   </Paper>
                 </CardActionArea>
               </CardContent>

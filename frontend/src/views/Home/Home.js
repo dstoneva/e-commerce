@@ -1,4 +1,4 @@
-import { Container, Grid } from '@mui/material'
+import { Container, Grid, Box } from '@mui/material'
 import { useMemo } from 'react'
 import {
   Carousel,
@@ -18,14 +18,32 @@ const Home = () => {
   const bannerSlides = useMemo(() => bannerData.map((slide, index) => <BannerSlide key={index} {...slide} />), [])
   return (
     <>
-      <Carousel
-        slides={bannerSlides}
-        pagination={{ clickable: true, type: 'bullets' }}
-        loop={true}
-        speed={800}
-        containerStyles={{ backgroundColor: 'background.white' }}
-        slideStyles={{ my: 2 }}
-      />{' '}
+      <Box
+        sx={{
+          width: '100%',
+          bgcolor: 'background.paper',
+          px: 4,
+          maxHeight: { xs: 'auto', lg: 500 },
+        }}
+      >
+        <Container
+          disableGutters
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Carousel
+            slides={bannerSlides}
+            pagination={{ clickable: true, type: 'bullets' }}
+            loop={true}
+            speed={200}
+            containerStyles={{ backgroundColor: 'background.white' }}
+            slideStyles={{ my: 2 }}
+          />
+        </Container>
+      </Box>
+
       <Container sx={{ py: 4 }}>
         <FlashDeals />
         <TopCategories />
@@ -40,7 +58,7 @@ const Home = () => {
             <NewArrivals />
           </Grid>
           <Grid item md={12} xs={12}>
-            <ProductList headline="More for you" productsNum={8} pageNum={2} />
+            <ProductList headline="More for you" productsNum={8} pageNum={4} />
           </Grid>
           <Grid item lg={12} xl={12}>
             <Delivery />
