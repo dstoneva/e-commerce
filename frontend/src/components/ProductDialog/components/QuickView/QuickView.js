@@ -12,10 +12,11 @@ const QuickView = ({ product }) => {
 
   const settings = {
     dots: false,
-    infinite: true,
-    speed: 500,
+    infinite: false,
+    speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
+    lazyLoad: 'progressive',
     nextArrow: <SliderArrow right size="small" />,
     prevArrow: <SliderArrow size="small" />,
   }
@@ -31,8 +32,10 @@ const QuickView = ({ product }) => {
             mx: 'auto',
             borderRadius: 1,
             position: 'relative',
+            overflow: 'hidden',
           }}
         >
+          {/* Skeleton while image is loading */}
           {!imageLoaded && (
             <Skeleton
               variant="rectangular"
@@ -43,28 +46,30 @@ const QuickView = ({ product }) => {
                 width: '100%',
                 height: '100%',
                 borderRadius: 1,
+                zIndex: imageLoaded ? -1 : 2, 
               }}
             />
           )}
+          {/* Image */}
           <Box
             component="img"
             src={image}
             alt={product.title}
-            loading="eager"
+            loading="lazy"
             onLoad={() => setImageLoaded(true)}
             sx={{
-              display: imageLoaded ? 'block' : 'none',
               width: '100%',
               height: '100%',
-              objectFit: 'contain',
-              aspectRatio: '1 / 1',
+              objectFit: 'contain', // Maintain aspect ratio
+              zIndex: 1,
+              position: 'relative', // Keep it behind the skeleton
+              visibility: imageLoaded ? 'visible' : 'hidden', // Completely hide until loaded
             }}
           />
         </Box>
       ))}
     </Slider>
   )
-
   const renderCartControls = () => {
     const isInCart = itemIds.includes(product._id)
     const quantity = getQuantity(product._id)
