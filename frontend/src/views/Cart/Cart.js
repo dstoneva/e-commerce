@@ -1,10 +1,12 @@
-import { Grid, useMediaQuery, Typography, Box, Link, Skeleton, Container } from '@mui/material'
+import { Grid, useMediaQuery, Skeleton, Container } from '@mui/material'
 import { useCart } from 'core'
-import { ProductCard, Subtotal, SideMenu } from 'components'
-import { useLocation } from 'react-router-dom'
+import { ProductCard, Subtotal, SideMenu, EmptyState } from 'components'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { PageURLs } from 'Routes'
 
 const Cart = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'))
   const { cart, isCartLoading } = useCart()
 
@@ -27,16 +29,20 @@ const Cart = () => {
           </Grid>
         </Grid>
       ) : cart.length < 1 ? (
-        <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column" gap={2} height={450}>
-          <Box component="img" loading="lazy" src="/images/cart.webp" alt="Cart" height={200} />
-          <Typography align="center" variant="h4">
-            Your cart is currently empty!
-          </Typography>
-          <Typography variant="subtitle1" color="gray" align="center">
-            Looks like you have not made your choice yet. Browse our awesome store,
-            <Link href="/">start shopping now</Link>!
-          </Typography>
-        </Box>
+        <EmptyState
+          image="/images/cart.webp"
+          altText="Empty Cart"
+          title="Your cart is currently empty!"
+          subtitle="Looks like you have not made your choice yet. Browse our awesome store and find what you love!"
+          primaryAction={{
+            text: 'Start Shopping',
+            onClick: () => navigate('/'),
+          }}
+          secondaryAction={{
+            text: 'Discover Favourites',
+            onClick: () => navigate(PageURLs.Favourites),
+          }}
+        />
       ) : (
         <Grid container spacing={3}>
           <Grid item xs={12} md={8} lg={8}>
