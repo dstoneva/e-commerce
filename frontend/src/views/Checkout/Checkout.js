@@ -34,14 +34,14 @@ const Checkout = () => {
         country: 'Bulgaria',
       },
       payment: {
-        type: 'delivery',
+        type: 'delivery', // Default payment method
+        details: '',
         card: {
-          number: '',
           name: '',
+          number: '',
           expiryDate: '',
           ccv: '',
         },
-        details: '',
       },
     },
     validationSchema: activeStep in validationSchemas ? validationSchemas[activeStep] : null,
