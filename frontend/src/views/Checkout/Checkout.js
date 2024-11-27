@@ -1,4 +1,4 @@
-import { Box, Button, Step, StepLabel, Stepper, Grid, Typography } from '@mui/material'
+import { Box, Button, Step, StepLabel, Stepper, Grid } from '@mui/material'
 import { useFormik } from 'formik'
 import { PageLayout } from 'layouts/Main/components'
 import { useState } from 'react'
@@ -66,12 +66,6 @@ const Checkout = () => {
     },
   })
 
-  if (originalCart.length < 1) {
-    setTimeout(function () {
-      navigate('/')
-    }, 5000)
-  }
-
   const steps = [
     { label: 'Cart', component: <Cart withoutFooter={true} /> },
     { label: 'Shipping', component: <Shipping formik={formik} /> },
@@ -136,12 +130,7 @@ const Checkout = () => {
           </Grid>
         </Grid>
       ) : (
-        <>
-          <Cart />
-          <Typography align="center" variant="subtitle1" fontWeight="bold">
-            You will be redirected to the homepage in 5 seconds
-          </Typography>
-        </>
+        <Cart />
       )}
     </PageLayout>
   )
