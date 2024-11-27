@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, IconButton, Box } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import { Player } from '@lottiefiles/react-lottie-player'
 
 const ConfirmationDialog = ({
   open,
@@ -17,15 +18,13 @@ const ConfirmationDialog = ({
       open={open}
       onClose={onClose}
       maxWidth="xs"
-      fullWidth
       PaperProps={{
         sx: {
-          borderRadius: 4,
-          boxShadow: 6,
+          borderRadius: 8,
+          boxShadow: 10,
           textAlign: 'center',
           position: 'relative',
           padding: 3,
-          minWidth: 300,
         },
       }}
     >
@@ -34,36 +33,31 @@ const ConfirmationDialog = ({
         onClick={onClose}
         sx={{
           position: 'absolute',
-          top: 16,
-          right: 16,
+          top: 12,
+          right: 12,
           color: 'grey.500',
         }}
       >
         <CloseIcon />
       </IconButton>
 
-      {/* Circular Icon */}
+      {/* Lottie Animation */}
       <Box
         sx={{
           margin: '0 auto',
-          width: 72,
-          height: 72,
-          borderRadius: '50%',
-          backgroundColor: '#FFD9DF',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: 3,
+          width: 120,
+          height: 120,
+          marginBottom: 2,
         }}
       >
-        <CloseIcon sx={{ color: '#FF1744', fontSize: 36 }} />
+        <Player autoplay speed={1} loop src="/images/warning.json" style={{ width: '100%', height: '100%' }} />
       </Box>
 
       {/* Title */}
       <DialogTitle
         sx={{
-          fontSize: 22,
-          fontWeight: 'bold',
+          fontSize: 24,
+          fontWeight: 700,
           color: 'text.primary',
           marginBottom: 1,
         }}
@@ -74,11 +68,12 @@ const ConfirmationDialog = ({
       {/* Description */}
       <DialogContent>
         <Typography
-          variant="body1"
+          variant="body2"
           sx={{
             color: 'text.secondary',
             marginBottom: 3,
             fontSize: 16,
+            lineHeight: 1.5,
           }}
         >
           {description}
@@ -89,24 +84,20 @@ const ConfirmationDialog = ({
       <DialogActions
         sx={{
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
           gap: 2,
         }}
       >
         <Button
           onClick={onClose}
-          variant="outlined"
           fullWidth
+          variant="outlined"
           sx={{
             textTransform: 'none',
             fontWeight: 'medium',
-            color: 'grey.600',
-            borderColor: 'grey.400',
-            padding: '6px 24px',
-            borderRadius: 2,
-            '&:hover': {
-              backgroundColor: 'rgba(0, 0, 0, 0.04)',
-            },
+            color: 'text.primary',
+            borderColor: '#E0E0E0',
+            padding: '10px 20px',
           }}
         >
           {cancelText}
@@ -114,17 +105,14 @@ const ConfirmationDialog = ({
         <Button
           onClick={onConfirm}
           fullWidth
+          color="primary"
           variant="contained"
           sx={{
             textTransform: 'none',
             fontWeight: 'medium',
-            backgroundColor: '#FF1744',
-            color: 'white',
-            padding: '6px 24px',
-            borderRadius: 2,
-            '&:hover': {
-              backgroundColor: '#D50000',
-            },
+            backgroundColor: 'error.main',
+            color: '#FFFFFF',
+            padding: '10px 20px',
           }}
         >
           {confirmText}
