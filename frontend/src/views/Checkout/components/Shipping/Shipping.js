@@ -1,8 +1,7 @@
 import React from 'react'
 import { Grid, Paper, Typography, Container, Box, Autocomplete, TextField } from '@mui/material'
-import { Subtotal } from 'components'
+import { Subtotal, TextFieldWithFormik } from 'components'
 import countries from 'utils/constants/countries'
-import TextFieldWithFormik from '../TextFieldWithFormik'
 
 const Shipping = ({ formik }) => {
   const fields = [

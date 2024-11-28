@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import TextFieldWithFormik from 'views/Checkout/components/TextFieldWithFormik'
+import { TextFieldWithFormik } from 'components'
 
 const CardDetails = ({ formik }) => {
   const fields = [

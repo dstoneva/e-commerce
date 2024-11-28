@@ -4,8 +4,7 @@ import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
-import { Subtotal } from 'components'
-import TextFieldWithFormik from '../TextFieldWithFormik'
+import { Subtotal, TextFieldWithFormik } from 'components'
 import { CardDetails } from './components'
 
 const Payment = ({ formik }) => {
