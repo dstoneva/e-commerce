@@ -50,7 +50,7 @@ const Cart = () => {
               !isMobile ? (
                 <ProductCard key={product._id} product={product} inCart />
               ) : (
-                <ProductCard key={product._id} product={product} />
+                <ProductCard key={product._id} product={product} quickView />
               )
             )}
           </Grid>
