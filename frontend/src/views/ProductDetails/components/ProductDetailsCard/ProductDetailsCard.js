@@ -30,7 +30,7 @@ const ProductDetailsCard = ({ product }) => {
               variant="rectangular"
               width={300}
               height={300}
-              sx={{ mb: 5, borderRadius: 2, position: 'absolute' }}
+              sx={{ mb: 5, borderRadius: 2, position: 'absolute', zIndex: imageLoaded ? -1 : 2 }}
             />
           )}
           <CardMedia
@@ -46,6 +46,8 @@ const ProductDetailsCard = ({ product }) => {
               transition: 'opacity 0.3s ease-in-out',
               position: 'relative',
               objectFit: 'contain',
+              zIndex: 1,
+              visibility: imageLoaded ? 'visible' : 'hidden', // Completely hide until loaded
             }}
             onLoad={() => setImageLoaded(true)}
           />
