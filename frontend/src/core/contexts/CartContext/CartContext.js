@@ -21,6 +21,7 @@ const cartReducer = (state, action) => {
             price: product.price,
             stock: product.stock,
             quantity: item.quantity >= product.stock ? product.stock : item.quantity,
+            rating: product.rating,
             thumbnail: product.thumbnail,
             discountPercentage: product.discountPercentage,
           }
