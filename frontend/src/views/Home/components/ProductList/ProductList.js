@@ -11,32 +11,34 @@ const ProductList = ({ pageNum, productsNum, headline, pagination }) => {
   const [page, setPage] = useState(pageNum)
   const [productsPerPage, setProductsPerPage] = useState(productsNum)
 
-  const {
-    data: products,
-    error,
-    isValidating,
-  } = useSWR(`/products?page=${page}&productsPerPage=${productsPerPage}`, { dedupingInterval: 60000 })
-
-  const isLoading = !products && isValidating
+  const { data: products, error } = useSWR(`/products?page=${page}&productsPerPage=${productsPerPage}`, {
+    dedupingInterval: 60000,
+  })
 
   return (
-    <PageLayout error={error} data={products}>
+    <PageLayout
+      error={error}
+      data={products}
+      loading={
+        <Grid container spacing={3}>
+          {Array.from({ length: productsPerPage }).map((_, index) => (
+            <Grid item xl={3} lg={3} md={4} sm={6} xs={12} key={index}>
+              <ProductCardSkeleton />
+            </Grid>
+          ))}
+        </Grid>
+      }
+    >
       <Headline icon={<WidgetsIcon color="primary" />} sx={{ marginTop: 4 }}>
         {headline}
       </Headline>
 
       <Grid container spacing={3}>
-        {isLoading
-          ? Array.from({ length: productsPerPage }).map((_, index) => (
-              <Grid item xl={3} lg={3} md={4} sm={6} xs={12} key={index}>
-                <ProductCardSkeleton />
-              </Grid>
-            ))
-          : products?.result.map((product) => (
-              <Grid item xl={3} lg={3} md={4} sm={6} xs={12} key={product._id}>
-                <ProductCard quickView product={product} />
-              </Grid>
-            ))}
+        {products?.result.map((product) => (
+          <Grid item xl={3} lg={3} md={4} sm={6} xs={12} key={product._id}>
+            <ProductCard quickView product={product} />
+          </Grid>
+        ))}
       </Grid>
 
       {pagination && (
