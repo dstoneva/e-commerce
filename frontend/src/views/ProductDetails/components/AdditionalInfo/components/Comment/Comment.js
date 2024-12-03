@@ -38,7 +38,7 @@ export default function Comment({ reviews, productId }) {
 
     try {
       // Send the new comment to the backend
-      const response = await axios.post(`${API_URL}/products/${productId}/comments`, newComment)
+      const response = await axios.post(`${API_URL}/products/${productId}/comment`, newComment)
 
       if (response.status === 200) {
         // Update the local state with the new comment
