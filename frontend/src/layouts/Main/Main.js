@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react'
 import { Box } from '@mui/material'
 import { ErrorBoundary } from 'components'
 import { Outlet } from 'react-router-dom/dist'
-import { Footer, LoadingOverlay, NavigationBar, TopInfoBar } from './components'
+import { LoadingOverlay, NavigationBar, TopInfoBar, Footer } from './components'
 
 const Main = ({ isSuspense }) => {
   const [showContent, setShowContent] = useState(false)
 
   useEffect(() => {
     if (!isSuspense) {
-      const timeout = setTimeout(() => setShowContent(true), 300)
+      const timeout = setTimeout(() => setShowContent(true), 200)
       return () => clearTimeout(timeout)
     } else {
       setShowContent(false)
@@ -38,7 +38,7 @@ const Main = ({ isSuspense }) => {
             overflowY: 'auto',
             display: 'flex',
             flexDirection: 'column',
-            transition: 'opacity 0.3s ease',
+            transition: 'opacity 0.2s ease',
             opacity: showContent ? 1 : 0,
           }}
         >
