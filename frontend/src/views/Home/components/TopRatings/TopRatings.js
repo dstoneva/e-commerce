@@ -13,7 +13,7 @@ const TopRatings = () => {
       buttonLink="#"
       gridSpacing={4}
       columnSpacing={4}
-      itemBreakpoints={{ xs: 6, md: 3, sm: 6 }}
+      itemBreakpoints={{ xs: 12, md: 3, sm: 6 }}
       itemStyle={{
         m: 'auto',
         display: 'flex',
