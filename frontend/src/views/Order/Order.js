@@ -12,7 +12,7 @@ const Order = () => {
   const { data, error } = useSWR(`/checkouts/${orderId}`)
 
   return (
-    <PageLayout error={error} data={data} container>
+    <PageLayout error={error} data={data} sx={{ minHeight: '80vh' }} container>
       <Headline icon={<LocalMallIcon color="primary" />} sx={{ marginBottom: 4 }}>
         Order details
       </Headline>
