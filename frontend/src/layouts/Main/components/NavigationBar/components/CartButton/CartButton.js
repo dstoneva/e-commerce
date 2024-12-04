@@ -1,6 +1,6 @@
 import { Close, ShoppingBag } from '@mui/icons-material'
 import { Avatar, Badge, Box, Button, Divider, Drawer, IconButton, Typography } from '@mui/material'
-import { DisplayCurrency, ProductCard } from 'components'
+import { DisplayCurrency, ProductCard, ConfirmationDialog } from 'components'
 import { useCart } from 'core'
 import { Fragment, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -10,12 +10,24 @@ const CartButton = () => {
   const { cart, totalPrice, quantity, resetCart } = useCart()
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
   const openDrawer = useCallback(() => setIsOpen(true), [])
   const closeDrawer = useCallback((event) => {
     if (event?.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return
     setIsOpen(false)
   }, [])
+
+  const handleEmptyCartClick = (event) => {
+    event.stopPropagation()
+    setConfirmDialogOpen(true)
+  }
+
+  const handleConfirmEmptyCart = () => {
+    resetCart()
+    setConfirmDialogOpen(false)
+    setIsOpen(false)
+  }
 
   return (
     <div>
@@ -46,7 +58,7 @@ const CartButton = () => {
         <Box display="flex" alignItems="center" height={60} p={2}>
           <ShoppingBag color="secondary" />
           <Typography variant="body1" color="secondary" sx={{ ml: 1 }}>
-            {quantity} {quantity < 2 ? 'item' : 'items'}
+            {quantity} {quantity === 1 ? 'item' : 'items'}
           </Typography>
         </Box>
         <Divider />
@@ -70,7 +82,6 @@ const CartButton = () => {
             fullWidth
             sx={{ mb: 1 }}
             onClick={(event) => {
-              event.stopPropagation()
               setIsOpen(false)
               setTimeout(() => navigate(PageURLs.Checkout), 200)
             }}
@@ -91,21 +102,22 @@ const CartButton = () => {
           >
             View cart
           </Button>
-          <Button
-            disabled={quantity < 1}
-            color="secondary"
-            variant="outlined"
-            fullWidth
-            onClick={(event) => {
-              event.stopPropagation()
-              resetCart()
-              setIsOpen(false)
-            }}
-          >
+          <Button disabled={quantity < 1} color="secondary" variant="outlined" fullWidth onClick={handleEmptyCartClick}>
             Empty cart
           </Button>
         </Box>
       </Drawer>
+
+      {/* Confirmation Dialog */}
+      <ConfirmationDialog
+        open={confirmDialogOpen}
+        onClose={() => setConfirmDialogOpen(false)}
+        onConfirm={handleConfirmEmptyCart}
+        title="Empty Cart"
+        description="Are you sure you want to empty your cart? This action cannot be undone."
+        confirmText="Empty Cart"
+        cancelText="Cancel"
+      />
     </div>
   )
 }
