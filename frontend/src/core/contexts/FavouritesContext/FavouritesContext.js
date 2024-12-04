@@ -108,7 +108,7 @@ const FavouritesProvider = ({ children }) => {
     {
       refreshInterval: 86400000, // 24 hours
       revalidateOnFocus: false,
-      dedupingInterval: 60000    }
+        }
   )
 
   useEffect(() => {
