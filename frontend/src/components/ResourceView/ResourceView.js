@@ -20,13 +20,13 @@ const ResourceView = ({
   loadingComponent,
   errorComponent,
   children,
+  container = false,  
   sx = {},
 }) => {
   if (isLoading) {
     return loadingComponent || (
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, ...sx }}>
         <CircularProgress />
-        <Typography variant="body2">Loading...</Typography>
       </Box>
     )
   }
