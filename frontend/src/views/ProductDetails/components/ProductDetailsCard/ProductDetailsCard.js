@@ -1,31 +1,55 @@
-import { Typography, Box, CardMedia, Grid, Rating, Button, IconButton, Tooltip } from '@mui/material'
+import { Typography, Box, CardMedia, Grid, Rating, IconButton, Tooltip, Skeleton } from '@mui/material'
 import { DisplayCurrency } from 'components'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useCart, useFavourites } from 'core'
-import AddIcon from '@mui/icons-material/Add'
-import RemoveIcon from '@mui/icons-material/Remove'
 import theme from 'theme'
 import { FavoriteBorderOutlined } from '@mui/icons-material'
 import Favorite from '@mui/icons-material/Favorite'
+import { CartActionsButton } from 'components'
 
 const ProductDetailsCard = ({ product }) => {
   const { getFinalPrice, addToCart, removeFromCart, itemIds, getQuantity } = useCart()
   const { isFavourite, addToFavourites, removeFromFavourites } = useFavourites()
 
   const [mainImage, setMainImage] = useState(0)
-  const changeImageHandler = (event, index) => {
+  const [imageLoaded, setImageLoaded] = useState(false)
+
+  const changeImageHandler = useCallback((event, index) => {
     setMainImage(index)
-  }
+    setImageLoaded(false) // Reset imageLoaded when thumbnail is changed
+  }, [])
+
+  if (!product) return null
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>
         <Box display="flex" alignItems="center" flexDirection="column">
+          {!imageLoaded && (
+            <Skeleton
+              variant="rectangular"
+              width={300}
+              height={300}
+              sx={{ mb: 5, borderRadius: 2, position: 'absolute', zIndex: imageLoaded ? -1 : 2 }}
+            />
+          )}
           <CardMedia
-            alt={product.title}
             component="img"
+            alt={product.title}
             src={product.images[mainImage]}
-            sx={{ width: 300, height: 300, mb: 5, borderRadius: 2 }}
+            sx={{
+              width: 300,
+              height: 300,
+              mb: 5,
+              borderRadius: 2,
+              opacity: imageLoaded ? 1 : 0,
+              transition: 'opacity 0.3s ease-in-out',
+              position: 'relative',
+              objectFit: 'contain',
+              zIndex: 1,
+              visibility: imageLoaded ? 'visible' : 'hidden', // Completely hide until loaded
+            }}
+            onLoad={() => setImageLoaded(true)}
           />
           <Box
             sx={{
@@ -67,9 +91,11 @@ const ProductDetailsCard = ({ product }) => {
           <Typography variant="h4" fontWeight="bold">
             {product.title}
           </Typography>
-          <Typography>
-            Brand: <b>{product.brand}</b>
-          </Typography>
+          {product.brand && (
+            <Typography variant="subtitle">
+              Brand: <b>{product.brand}</b>
+            </Typography>
+          )}
           <Box display="flex" gap={1} alignItems="center">
             <Typography variant="subtitle">Rated:</Typography>
             <Rating value={product.rating} readOnly size="small" />
@@ -80,40 +106,16 @@ const ProductDetailsCard = ({ product }) => {
           </Typography>
           <Typography variant="subtitle2">{product.stock > 0 ? 'Stock available' : 'Out of Stock'}</Typography>
           <Box display="flex" gap={2}>
-            {itemIds.includes(product._id) ? (
-              <>
-                <Button
-                  color="primary"
-                  onClick={() => removeFromCart(product._id)}
-                  variant="outlined"
-                  sx={{ minWidth: 0, p: '3px' }}
-                >
-                  <RemoveIcon fontSize="small" />
-                </Button>
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <Typography textAlign="center" fontWeight={600} fontSize={20}>
-                    {getQuantity(product._id)}
-                  </Typography>
-                </Box>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  sx={{ minWidth: 0, p: '3px' }}
-                  onClick={() => addToCart(product)}
-                >
-                  <AddIcon fontSize="small" />
-                </Button>
-              </>
-            ) : (
-              <Button
-                disabled={product.stock === 0 ? true : false}
-                onClick={() => addToCart(product)}
-                variant="contained"
-                color="primary"
-              >
-                {product.stock > 0 ? 'Add to cart' : 'Out of stock'}
-              </Button>
-            )}
+            <CartActionsButton
+              inCart={itemIds.includes(product._id)}
+              quantity={getQuantity(product._id)}
+              stock={product.stock}
+              onAdd={() => addToCart(product)}
+              onRemove={() => removeFromCart(product._id)}
+              layout="row"
+              buttonSize="medium"
+              layoutStyle="button-with-text"
+            />
             {!isFavourite(product._id) ? (
               <Tooltip title="Add to favourites">
                 <IconButton
@@ -124,7 +126,7 @@ const ProductDetailsCard = ({ product }) => {
                   }}
                   onClick={() => addToFavourites(product)}
                 >
-                  <FavoriteBorderOutlined size="medium"></FavoriteBorderOutlined>
+                  <FavoriteBorderOutlined size="medium" />
                 </IconButton>
               </Tooltip>
             ) : (

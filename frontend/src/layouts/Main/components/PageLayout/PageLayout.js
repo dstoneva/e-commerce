@@ -1,5 +1,4 @@
-import { Box, CircularProgress, Container, Divider, Typography, Stack } from '@mui/material'
-import { Footer } from './components'
+import { Box, CircularProgress, Container, Divider, Typography } from '@mui/material'
 
 const PageLayout = ({
   error,
@@ -9,7 +8,7 @@ const PageLayout = ({
   container = false,
   title,
   loading = <CircularProgress />,
-  withoutFooter,
+  sx = {},
 }) => {
   if (error)
     return (
@@ -19,25 +18,18 @@ const PageLayout = ({
     )
 
   if (!data && !error && isAsync)
-    return (
-      <Stack justifyContent="center" alignItems="center" direction="row" minHeight="100vh">
-        {loading}
-      </Stack>
-    )
+    return <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', ...sx }}>{loading}</Box>
 
   return container ? (
-    <>
-      <Container sx={{ py: 4 }}>
-        {title && (
-          <Box mb={2}>
-            <Typography variant="h5">{title}</Typography>
-            <Divider />
-          </Box>
-        )}
-        {children}
-      </Container>
-      {!withoutFooter && <Footer />}
-    </>
+    <Container sx={{ py: 4, height: '100%', flex: 1 }}>
+      {title && (
+        <Box mb={2}>
+          <Typography variant="h5">{title}</Typography>
+          <Divider />
+        </Box>
+      )}
+      {children}
+    </Container>
   ) : (
     children
   )

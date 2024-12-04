@@ -1,42 +1,37 @@
 import { Close, ShoppingBag } from '@mui/icons-material'
-import {
-  Avatar,
-  Badge,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Divider,
-  Drawer,
-  IconButton,
-  Typography,
-} from '@mui/material'
-import { DisplayCurrency } from 'components'
+import { Avatar, Badge, Box, Button, Divider, Drawer, IconButton, Typography } from '@mui/material'
+import { DisplayCurrency, ProductCard, ConfirmationDialog } from 'components'
 import { useCart } from 'core'
-import { Fragment, useState } from 'react'
-import RemoveIcon from '@mui/icons-material/Remove'
-import AddIcon from '@mui/icons-material/Add'
+import { Fragment, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageURLs } from 'Routes'
 
 const CartButton = () => {
-  const { cart, removeFromCart, addToCart, getFinalPrice, totalPrice, quantity, resetCart } = useCart()
+  const { cart, totalPrice, quantity, resetCart } = useCart()
   const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
-  const [state, setState] = useState(false)
+  const openDrawer = useCallback(() => setIsOpen(true), [])
+  const closeDrawer = useCallback((event) => {
+    if (event?.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return
+    setIsOpen(false)
+  }, [])
 
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return
-    }
+  const handleEmptyCartClick = (event) => {
+    event.stopPropagation()
+    setConfirmDialogOpen(true)
+  }
 
-    setState(open)
+  const handleConfirmEmptyCart = () => {
+    resetCart()
+    setConfirmDialogOpen(false)
+    setIsOpen(false)
   }
 
   return (
     <div>
-      <IconButton sx={{ p: 0 }} onClick={toggleDrawer(true)}>
+      <IconButton sx={{ p: 0 }} onClick={openDrawer}>
         <Badge badgeContent={quantity} color="primary">
           <Avatar>
             <ShoppingBag />
@@ -46,116 +41,83 @@ const CartButton = () => {
 
       <Drawer
         anchor="right"
-        open={state}
-        onClose={toggleDrawer(false)}
+        open={isOpen}
+        onClose={closeDrawer}
         PaperProps={{
-          sx: { display: 'flex', flexDirection: 'column', justifyContent: 'space-between' },
+          sx: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            maxWidth: { xs: 320, sm: 400 },
+          },
         }}
       >
-        <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={toggleDrawer(false)}>
+        <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={closeDrawer}>
           <Close />
         </IconButton>
-        <Box>
-          <Box display="flex" alignItems="center" p={2}>
-            <ShoppingBag color="secondary" />{' '}
-            <Typography variant="body1" color="secondary" sx={{ ml: 1 }}>
-              {quantity} {quantity < 2 ? ' item' : ' items'}
-            </Typography>
-          </Box>
-          <Divider />
-          {cart.map((product) => {
-            const finalPrice = getFinalPrice(product)
-            return (
-              <Fragment key={product._id}>
-                <Card sx={{ p: 2, display: 'flex', height: 100, alignItems: 'center' }} elevation={0}>
-                  <CardMedia component="img" sx={{ width: 100 }} image={product.thumbnail} alt={product.title} />
-                  <CardContent sx={{ flex: '1 0 auto', p: 0, pl: 2, pb: '0 !important' }}>
-                    <Box display="flex" justifyContent="space-between">
-                      <Box maxWidth="140px">
-                        <Typography variant="body1" noWrap>
-                          {product.title}
-                        </Typography>
-                        <Typography variant="overline" component="div">
-                          {product.discountPercentage > 0 ? (
-                            <>
-                              <Box display="flex" alignItems="center">
-                                <Box>
-                                  <DisplayCurrency number={finalPrice} />
-                                </Box>
-                                <Box
-                                  sx={{ textDecoration: 'line-through', ml: 1, color: 'error.main', display: 'inline' }}
-                                >
-                                  <DisplayCurrency number={product.price} />
-                                </Box>
-                              </Box>
-                            </>
-                          ) : (
-                            <DisplayCurrency number={finalPrice} />
-                          )}
-                        </Typography>
-                      </Box>
-                      <Box display="flex" alignItems="center">
-                        <IconButton onClick={() => removeFromCart(product._id)} size="small">
-                          <RemoveIcon />
-                        </IconButton>
-                        <Typography variant="body1">{product.quantity}</Typography>
-                        <IconButton
-                          onClick={() => addToCart(product)}
-                          disabled={product.quantity >= product.stock}
-                          size="small"
-                        >
-                          <AddIcon />
-                        </IconButton>
-                      </Box>
-                    </Box>
-                  </CardContent>
-                </Card>
-                <Divider />
-              </Fragment>
-            )
-          })}
+        <Box display="flex" alignItems="center" height={60} p={2}>
+          <ShoppingBag color="secondary" />
+          <Typography variant="body1" color="secondary" sx={{ ml: 1 }}>
+            {quantity} {quantity === 1 ? 'item' : 'items'}
+          </Typography>
         </Box>
-        <Box p={2}>
+        <Divider />
+        <Box
+          sx={{
+            overflowY: 'auto',
+            height: `calc(100% - 60px - 155px)`,
+          }}
+        >
+          {cart.map((product) => (
+            <Fragment key={product._id}>
+              <ProductCard product={product} inCartDrawer />
+            </Fragment>
+          ))}
+        </Box>
+        <Box height={155} p={2}>
           <Button
-            disabled={quantity === 0 ? true : false}
+            disabled={quantity === 0}
             color="primary"
             variant="contained"
             fullWidth
             sx={{ mb: 1 }}
-            onClick={() => {
-              navigate(PageURLs.Checkout)
-              toggleDrawer()(false)
+            onClick={(event) => {
+              setIsOpen(false)
+              setTimeout(() => navigate(PageURLs.Checkout), 200)
             }}
           >
             Checkout (<DisplayCurrency number={totalPrice} />)
           </Button>
           <Button
-            disabled={quantity === 0 ? true : false}
+            disabled={quantity === 0}
             color="primary"
             variant="outlined"
             fullWidth
             sx={{ mb: 1 }}
-            onClick={() => {
-              navigate(PageURLs.Cart)
-              toggleDrawer()(false)
+            onClick={(event) => {
+              event.stopPropagation()
+              setIsOpen(false)
+              setTimeout(() => navigate(PageURLs.Cart), 200)
             }}
           >
             View cart
           </Button>
-          <Button
-            disabled={quantity < 1 ? true : false}
-            color="secondary"
-            variant="outlined"
-            fullWidth
-            onClick={() => {
-              resetCart()
-              toggleDrawer()(false)
-            }}
-          >
+          <Button disabled={quantity < 1} color="secondary" variant="outlined" fullWidth onClick={handleEmptyCartClick}>
             Empty cart
           </Button>
         </Box>
       </Drawer>
+
+      {/* Confirmation Dialog */}
+      <ConfirmationDialog
+        open={confirmDialogOpen}
+        onClose={() => setConfirmDialogOpen(false)}
+        onConfirm={handleConfirmEmptyCart}
+        title="Empty Cart"
+        description="Are you sure you want to empty your cart? This action cannot be undone."
+        confirmText="Empty Cart"
+        cancelText="Cancel"
+      />
     </div>
   )
 }

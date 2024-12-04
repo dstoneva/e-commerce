@@ -4,6 +4,7 @@ import { IconButton } from '@mui/material'
 const SliderArrow = ({ right = false, onClick, size }) => {
   return (
     <IconButton
+      aria-label="slider-arrow"
       onClick={onClick}
       color="secondary"
       size={size || 'large'}

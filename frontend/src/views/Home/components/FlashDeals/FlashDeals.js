@@ -1,55 +1,34 @@
 import { ArrowRight } from '@mui/icons-material'
-import { Button, Grid, Link, useTheme } from '@mui/material'
+import { Button, Link, useTheme } from '@mui/material'
 import Slider from 'react-slick'
 import { ProductCard, SliderArrow } from 'components'
-import { PageLayout as Widget } from 'layouts/Main/components'
 import useSWR from 'swr'
 import Headline from '../Headline'
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt'
+import ResourceView from 'components/ResourceView/ResourceView'
+import ProductCardSkeleton from 'components/ProductCard/ProductCardSkeleton'
 
 const FlashDeals = () => {
-  const { data: products, error } = useSWR(`/products?productsPerPage=8`)
   const theme = useTheme()
+
+  const { data: products, error, isLoading } = useSWR(`/products?page=1&productsPerPage=8`, { dedupingInterval: 60000 })
 
   const settings = {
     dots: false,
-    infinite: true,
-    speed: 500,
+    infinite: false,
+    speed: 300,
     slidesToShow: 4,
     slidesToScroll: 1,
     nextArrow: <SliderArrow right />,
     prevArrow: <SliderArrow />,
+    swipe: false,
+    lazyLoad: 'progressive',
     responsive: [
-      {
-        breakpoint: theme.breakpoints.values.xl,
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: theme.breakpoints.values.lg,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: theme.breakpoints.values.md,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: theme.breakpoints.values.sm,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-      {
-        breakpoint: theme.breakpoints.values.xs,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
+      { breakpoint: theme.breakpoints.values.xl, settings: { slidesToShow: 4 } },
+      { breakpoint: theme.breakpoints.values.lg, settings: { slidesToShow: 3 } },
+      { breakpoint: theme.breakpoints.values.md, settings: { slidesToShow: 2 } },
+      { breakpoint: theme.breakpoints.values.sm, settings: { slidesToShow: 1 } },
+      { breakpoint: theme.breakpoints.values.xs, settings: { slidesToShow: 1 } },
     ],
   }
 
@@ -70,15 +49,34 @@ const FlashDeals = () => {
       >
         Flash Deals
       </Headline>
-      <Widget error={error} data={products}>
-        <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
+
+      <ResourceView
+        isLoading={isLoading}
+        isError={error}
+        loadingComponent={
+          <Slider {...settings}>
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} style={{ padding: '0 8px' }}>
+                <ProductCardSkeleton />
+              </div>
+            ))}
+          </Slider>
+        }
+      >
+        <Slider {...settings}>
           {products?.result.map((product) => (
-            <Grid item xs={12} xl={3} lg={4} md={6} sm={12} key={product._id}>
-              <ProductCard quickView product={product} />
-            </Grid>
+            <div key={product._id} style={{ padding: '0 8px' }}>
+              <ProductCard
+                quickView
+                product={{
+                  ...product,
+                  thumbnail: product.thumbnail,
+                }}
+              />
+            </div>
           ))}
         </Slider>
-      </Widget>
+      </ResourceView>
     </>
   )
 }

@@ -29,8 +29,8 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       return (
         <Fragment>
-          <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-            <img src="/images/issue.png" alt="error" width="350" />
+          <Box height="100dvh" width="100dvw" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+            <Box component="img" height="250px" width="250px" src="/images/issue.webp" alt="error" />
             <Typography variant="h3" align="center" sx={{ mt: 4 }}>
               We had an internal issue
             </Typography>

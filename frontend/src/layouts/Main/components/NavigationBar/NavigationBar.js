@@ -36,6 +36,7 @@ const NavigationBar = () => {
       sx={{
         bgcolor: 'background.paper',
         pb: 1,
+        height: 80,
       }}
       elevation={0}
     >
@@ -50,7 +51,7 @@ const NavigationBar = () => {
             <Link to="/" style={{ maxHeight: 50 }}>
               <Box
                 component="img"
-                src={isMobile ? 'images/bazaar-black-sm.svg' : '/images/logo2.svg'}
+                src={isMobile ? '/images/bazaar-black-sm.svg' : '/images/logo2.svg'}
                 alt="logo"
                 sx={{ maxHeight: 50 }}
               />

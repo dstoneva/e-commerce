@@ -1,5 +1,5 @@
-import { Box, Button, Divider, Link, Paper, TextField, Typography } from '@mui/material'
-import { Logo } from 'components'
+import { Box, Button, Divider, Link, Paper, Typography } from '@mui/material'
+import { Logo, TextFieldWithFormik } from 'components'
 import { useAuth } from 'core'
 import { useFormik } from 'formik'
 import { Link as RouterLink } from 'react-router-dom'
@@ -27,6 +27,11 @@ const Login = () => {
       await login({ email, password })
     },
   })
+
+  const fields = [
+    { name: 'email', label: 'Email', type: 'email', sx: { mb: 1 } },
+    { name: 'password', label: 'Password', type: 'password', sx: { mb: 2 } },
+  ]
   return (
     <Paper elevation={3} sx={{ p: 2, maxWidth: 400, width: '100%' }}>
       <Box display="flex" justifyContent="center" flexDirection="column" alignItems="center" sx={{ mt: 1 }}>
@@ -37,32 +42,9 @@ const Login = () => {
       </Box>
       <Divider sx={{ my: 2 }} />
       <form onSubmit={formik.handleSubmit}>
-        <TextField
-          fullWidth
-          id="email"
-          label="Email"
-          name="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-          sx={{ mb: 1 }}
-        />
-        <TextField
-          fullWidth
-          id="password"
-          name="password"
-          label="Password"
-          type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
-          sx={{ mb: 2 }}
-        />
-
+        {fields.map((field) => (
+          <TextFieldWithFormik key={field.name} formik={formik} {...field} />
+        ))}
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Button color="primary" variant="contained" type="submit">
             Login

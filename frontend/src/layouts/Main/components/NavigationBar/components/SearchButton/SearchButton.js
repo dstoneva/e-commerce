@@ -31,15 +31,20 @@ const SearchButton = () => {
           sx: { display: 'flex', flexDirection: 'column', justifyContent: 'space-between' },
         }}
       >
-        <Box sx={{ p: 2 }}>
+        {/* Header Section */}
+        <Box sx={{ p: 2, position: 'relative' }}>
           <Typography variant="subtitle">Search Bazaar</Typography>
           <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={toggleDrawer(false)}>
             <Close />
           </IconButton>
         </Box>
 
+        {/* Search Section */}
         <Box sx={{ height: '300px', padding: 2, width: 'auto' }}>
-          <LiveSearch toggleDrawer={toggleDrawer} setState={setState} />
+          <LiveSearch
+            onCloseDrawer={() => setState(false)} // Closes drawer when a search is executed
+            autoFocus={state} // Focuses the input field when the drawer opens
+          />
         </Box>
       </Drawer>
     </div>

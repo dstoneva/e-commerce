@@ -29,6 +29,7 @@ const CategoriesProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState)
   const { data, error } = useSWR(isAuthenticated ? `/categories` : null, {
     refreshInterval: 86400000, // 24 hours
+    revalidateOnFocus: false,
   })
 
   useEffect(() => {

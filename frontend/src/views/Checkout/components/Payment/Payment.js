@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
-import { Grid, Paper, Radio, TextField, Typography } from '@mui/material'
+import { Grid, Paper, Radio, Typography } from '@mui/material'
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
+import { Subtotal, TextFieldWithFormik } from 'components'
 import { CardDetails } from './components'
-import { Subtotal } from 'components'
 
 const Payment = ({ formik }) => {
   const paymentMethods = [
@@ -35,18 +35,13 @@ const Payment = ({ formik }) => {
             </Accordion>
           ))}
 
-          <TextField
-            sx={{ mt: 2 }}
-            fullWidth
-            multiline
-            minRows={3}
-            label="Additional details"
+          <TextFieldWithFormik
+            formik={formik}
             name="payment.details"
-            value={formik.values.payment?.details}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.payment?.details && Boolean(formik.errors.payment?.details)}
-            helperText={formik.touched.payment?.details && formik.errors.payment?.details}
+            label="Additional details"
+            type="textarea"
+            required={false}
+            sx={{ mt: 2 }}
           />
         </Paper>
       </Grid>
