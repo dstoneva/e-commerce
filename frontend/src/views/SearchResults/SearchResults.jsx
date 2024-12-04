@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Box, Grid, Typography, CircularProgress, Container } from '@mui/material'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import { ProductCard } from 'components'
 import { API_URL } from 'config'
+import useInfiniteScroll from 'utils/hooks/useInfiniteScroll'
 
 const SearchResults = () => {
   const location = useLocation()
@@ -14,18 +15,19 @@ const SearchResults = () => {
   const [hasMore, setHasMore] = useState(true)
   const [loading, setLoading] = useState(false)
   const [total, setTotal] = useState(0)
+  const fetchLock = useRef(false) 
 
-  const observerRef = useRef()
-
-  const fetchProducts = async (currentPage) => {
+  const fetchProducts = useCallback(async (currentPage) => {
+    if (fetchLock.current) return
+    fetchLock.current = true
     setLoading(true)
+
     try {
       const { data } = await axios.get(`${API_URL}/products`, {
         params: { page: currentPage, productsPerPage: 8, search: query },
-      })
+      }, [query])
 
       setProducts((prevProducts) => (currentPage === 1 ? data.result : [...prevProducts, ...data.result]))
-
       setHasMore(data.pages > currentPage)
       setTotal(data.total)
       setPage(currentPage + 1)
@@ -34,37 +36,26 @@ const SearchResults = () => {
       setHasMore(false)
     } finally {
       setLoading(false)
+      fetchLock.current = false
     }
-  }
+  }, [query])
 
   useEffect(() => {
+    // Reset states when the query changes
     setProducts([])
     setPage(1)
     setHasMore(true)
 
     if (query) fetchProducts(1)
-  }, [query])
+  }, [fetchProducts, query])
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && hasMore && !loading) {
-          fetchProducts(page)
-        }
-      },
-      { root: null, rootMargin: '0px', threshold: 1.0 }
-    )
-
-    if (observerRef.current) {
-      observer.observe(observerRef.current)
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current)
-      }
-    }
-  }, [hasMore, loading, page])
+  const observerRef = useInfiniteScroll(
+    () => {
+      if (!loading && hasMore) fetchProducts(page)
+    },
+    hasMore,
+    loading
+  )
 
   if (!query) {
     return (
@@ -84,7 +75,7 @@ const SearchResults = () => {
       <Typography variant="h4" gutterBottom>{`Search Results for: "${query.slice(0, 50)}"`}</Typography>
       {total === 0 && !loading && (
         <Typography variant="body1" color="textSecondary" sx={{ mt: 4, textAlign: 'center' }}>
-          No results found for your search. Please try a different query.
+          No results found for your search. Please try a different search term.
         </Typography>
       )}
 
