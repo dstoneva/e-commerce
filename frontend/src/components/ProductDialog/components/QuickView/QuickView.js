@@ -6,7 +6,7 @@ import SliderArrow from 'components/SliderArrow'
 import { useCart } from 'core'
 import { CartActionsButton } from 'components'
 
-const QuickView = ({ product }) => {
+const QuickView = ({ product, thumbnail }) => {
   const { getFinalPrice, itemIds, getQuantity, addToCart, removeFromCart } = useCart()
   const [imageLoaded, setImageLoaded] = useState(false)
 
@@ -21,9 +21,11 @@ const QuickView = ({ product }) => {
     prevArrow: <SliderArrow size="small" />,
   }
 
+  const images = product.images.length > 1 ? product.images : [thumbnail]
+
   const renderImageSlider = () => (
     <Slider {...settings} style={{ paddingTop: 8, paddingBottom: 8 }}>
-      {product.images.slice(0, 3).map((image, index) => (
+      {images.slice(0, 3).map((image, index) => (
         <Box
           key={index}
           sx={{
@@ -46,7 +48,7 @@ const QuickView = ({ product }) => {
                 width: '100%',
                 height: '100%',
                 borderRadius: 1,
-                zIndex: imageLoaded ? -1 : 2, 
+                zIndex: imageLoaded ? -1 : 2,
               }}
             />
           )}

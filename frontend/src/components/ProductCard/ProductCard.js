@@ -151,7 +151,7 @@ const ProductCard = ({ product, inCart = false, inCartDrawer = false, quickView 
       >
         {quickView && (
           <>
-            <ProductDialog isDialogOpened={isDialogOpen} productId={product._id} handleCloseDialog={handleQuickView} />
+            <ProductDialog isDialogOpened={isDialogOpen} thumbnail={product.thumbnail} productId={product._id} handleCloseDialog={handleQuickView} />
             <IconButton onClick={handleQuickView}>
               <RemoveRedEye sx={{ color: 'rgba(174, 180, 190, 1)' }} />
             </IconButton>
