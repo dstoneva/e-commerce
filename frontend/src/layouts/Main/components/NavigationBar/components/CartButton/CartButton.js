@@ -2,7 +2,7 @@ import { Close, ShoppingBag } from '@mui/icons-material'
 import { Avatar, Badge, Box, Button, Divider, Drawer, IconButton, Typography } from '@mui/material'
 import { DisplayCurrency, ProductCard, ConfirmationDialog } from 'components'
 import { useCart } from 'core'
-import { Fragment, useState, useCallback } from 'react'
+import { Fragment, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageURLs } from 'Routes'
 
@@ -12,11 +12,9 @@ const CartButton = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
-  const openDrawer = useCallback(() => setIsOpen(true), [])
-  const closeDrawer = useCallback((event) => {
-    if (event?.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return
-    setIsOpen(false)
-  }, [])
+  const toggleDrawer = (newOpen) => () => {
+    setIsOpen(newOpen)
+  }
 
   const handleEmptyCartClick = (event) => {
     event.stopPropagation()
@@ -31,7 +29,7 @@ const CartButton = () => {
 
   return (
     <div>
-      <IconButton sx={{ p: 0 }} onClick={openDrawer}>
+      <IconButton sx={{ p: 0 }} onClick={toggleDrawer(true)}>
         <Badge badgeContent={quantity} color="primary">
           <Avatar>
             <ShoppingBag />
@@ -42,7 +40,7 @@ const CartButton = () => {
       <Drawer
         anchor="right"
         open={isOpen}
-        onClose={closeDrawer}
+        onClose={toggleDrawer(false)}
         PaperProps={{
           sx: {
             display: 'flex',
@@ -52,7 +50,7 @@ const CartButton = () => {
           },
         }}
       >
-        <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={closeDrawer}>
+        <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={toggleDrawer(false)}>
           <Close />
         </IconButton>
         <Box display="flex" alignItems="center" height={60} p={2}>
@@ -81,7 +79,7 @@ const CartButton = () => {
             variant="contained"
             fullWidth
             sx={{ mb: 1 }}
-            onClick={(event) => {
+            onClick={() => {
               setIsOpen(false)
               setTimeout(() => navigate(PageURLs.Checkout), 200)
             }}
@@ -94,8 +92,7 @@ const CartButton = () => {
             variant="outlined"
             fullWidth
             sx={{ mb: 1 }}
-            onClick={(event) => {
-              event.stopPropagation()
+            onClick={() => {
               setIsOpen(false)
               setTimeout(() => navigate(PageURLs.Cart), 200)
             }}
