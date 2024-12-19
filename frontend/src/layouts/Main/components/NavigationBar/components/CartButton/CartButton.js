@@ -93,7 +93,7 @@ const CartButton = () => {
             fullWidth
             sx={{ mb: 1 }}
             onClick={() => {
-              setIsOpen(false)
+              toggleDrawer(false)
               setTimeout(() => navigate(PageURLs.Cart), 200)
             }}
           >
