@@ -12,10 +12,6 @@ const CartButton = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
-  const toggleDrawer = (newOpen) => () => {
-    setIsOpen(newOpen)
-  }
-
   const handleEmptyCartClick = (event) => {
     event.stopPropagation()
     setConfirmDialogOpen(true)
@@ -24,12 +20,15 @@ const CartButton = () => {
   const handleConfirmEmptyCart = () => {
     resetCart()
     setConfirmDialogOpen(false)
-    setIsOpen(false)
+  }
+
+  const toggleDrawer = () => {
+    setIsOpen(!isOpen)
   }
 
   return (
     <div>
-      <IconButton sx={{ p: 0 }} onClick={toggleDrawer(true)}>
+      <IconButton sx={{ p: 0 }} onClick={toggleDrawer}>
         <Badge badgeContent={quantity} color="primary">
           <Avatar>
             <ShoppingBag />
@@ -40,7 +39,6 @@ const CartButton = () => {
       <Drawer
         anchor="right"
         open={isOpen}
-        onClose={toggleDrawer(false)}
         PaperProps={{
           sx: {
             display: 'flex',
@@ -50,7 +48,7 @@ const CartButton = () => {
           },
         }}
       >
-        <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={toggleDrawer(false)}>
+        <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={toggleDrawer}>
           <Close />
         </IconButton>
         <Box display="flex" alignItems="center" height={60} p={2}>
@@ -93,7 +91,7 @@ const CartButton = () => {
             fullWidth
             sx={{ mb: 1 }}
             onClick={() => {
-              toggleDrawer(false)
+              setIsOpen(false)
               setTimeout(() => navigate(PageURLs.Cart), 200)
             }}
           >
