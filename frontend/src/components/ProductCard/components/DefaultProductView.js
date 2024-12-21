@@ -19,6 +19,7 @@ const DefaultProductView = ({
   product,
   finalPrice,
   quickView,
+  isDialogOpen,
   handleQuickView,
   addToFavourites,
   removeFromFavourites,
@@ -110,7 +111,7 @@ const DefaultProductView = ({
         </Tooltip>
         <Rating value={product.rating} readOnly size="medium" sx={{ fontSize: '1.25rem' }} />
         <Box mt={1}>
-          <PriceDisplay product={product} finalPrice={finalPrice} />
+          <PriceDisplay quickView={quickView} product={product} finalPrice={finalPrice} />
         </Box>
       </CardContent>
       <CardActions
@@ -135,9 +136,9 @@ const DefaultProductView = ({
     </Box>
 
     {/* Quick View Dialog */}
-    {quickView && (
+    {isDialogOpen && (
       <ProductDialog
-        isDialogOpened={quickView}
+        isDialogOpened={isDialogOpen}
         thumbnail={product.thumbnail}
         productId={product._id}
         handleCloseDialog={handleQuickView}

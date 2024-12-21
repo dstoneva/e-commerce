@@ -46,7 +46,8 @@ const ProductCard = ({ product, inCart = false, inCartDrawer = false, quickView 
     <DefaultProductView
       product={product}
       finalPrice={finalPrice}
-      quickView={isDialogOpen}
+      quickView={quickView}
+      isDialogOpen={isDialogOpen}
       handleQuickView={handleQuickView}
       addToFavourites={addToFavourites}
       removeFromFavourites={removeFromFavourites}
