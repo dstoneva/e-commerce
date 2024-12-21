@@ -2,13 +2,14 @@ import { Close, ShoppingBag } from '@mui/icons-material'
 import { Avatar, Badge, Box, Button, Divider, Drawer, IconButton, Typography } from '@mui/material'
 import { DisplayCurrency, ProductCard, ConfirmationDialog } from 'components'
 import { useCart } from 'core'
-import { Fragment, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Fragment, useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { PageURLs } from 'Routes'
 
 const CartButton = () => {
   const { cart, totalPrice, quantity, resetCart } = useCart()
   const navigate = useNavigate()
+  const location = useLocation()
   const [isOpen, setIsOpen] = useState(false)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
@@ -23,7 +24,19 @@ const CartButton = () => {
   }
 
   const toggleDrawer = () => {
-    setIsOpen(!isOpen)
+    setIsOpen((prev) => !prev)
+  }
+
+  useEffect(() => {
+    setIsOpen(false)
+  }, [location.pathname])
+
+  const handleNavigation = (path) => {
+    if (path === location.pathname) {
+      setIsOpen(false)
+      return
+    }
+    navigate(path)
   }
 
   return (
@@ -39,6 +52,7 @@ const CartButton = () => {
       <Drawer
         anchor="right"
         open={isOpen}
+        onClose={toggleDrawer}
         PaperProps={{
           sx: {
             display: 'flex',
@@ -77,10 +91,7 @@ const CartButton = () => {
             variant="contained"
             fullWidth
             sx={{ mb: 1 }}
-            onClick={() => {
-              setIsOpen(false)
-              setTimeout(() => navigate(PageURLs.Checkout), 200)
-            }}
+            onClick={() => handleNavigation(PageURLs.Checkout)}
           >
             Checkout (<DisplayCurrency number={totalPrice} />)
           </Button>
@@ -90,10 +101,7 @@ const CartButton = () => {
             variant="outlined"
             fullWidth
             sx={{ mb: 1 }}
-            onClick={() => {
-              setIsOpen(false)
-              setTimeout(() => navigate(PageURLs.Cart), 200)
-            }}
+            onClick={() => handleNavigation(PageURLs.Cart)}
           >
             View cart
           </Button>
