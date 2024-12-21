@@ -12,6 +12,7 @@ import { useSnackbar } from 'notistack'
 import { PageURLs } from 'Routes'
 import { useNavigate } from 'react-router-dom'
 import { Shipping, Payment } from './components'
+import { ScrollToTopOnMount } from 'components'
 
 const Checkout = () => {
   const { setError } = useError()
@@ -86,6 +87,7 @@ const Checkout = () => {
 
   return (
     <PageLayout isAsync={false} container>
+      <ScrollToTopOnMount dependencies={[activeStep]} />
       {originalCart.length > 0 ? (
         <Grid container>
           <Grid item sm={12} display={{ sm: 'block', xs: 'none', m: 2 }}>
