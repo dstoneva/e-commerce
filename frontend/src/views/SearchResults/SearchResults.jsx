@@ -15,30 +15,37 @@ const SearchResults = () => {
   const [hasMore, setHasMore] = useState(true)
   const [loading, setLoading] = useState(false)
   const [total, setTotal] = useState(0)
-  const fetchLock = useRef(false) 
+  const fetchLock = useRef(false)
 
-  const fetchProducts = useCallback(async (currentPage) => {
-    if (fetchLock.current) return
-    fetchLock.current = true
-    setLoading(true)
+  const fetchProducts = useCallback(
+    async (currentPage) => {
+      if (fetchLock.current) return
+      fetchLock.current = true
+      setLoading(true)
 
-    try {
-      const { data } = await axios.get(`${API_URL}/products`, {
-        params: { page: currentPage, productsPerPage: 8, search: query },
-      }, [query])
+      try {
+        const { data } = await axios.get(
+          `${API_URL}/products`,
+          {
+            params: { page: currentPage, productsPerPage: 8, search: query },
+          },
+          [query]
+        )
 
-      setProducts((prevProducts) => (currentPage === 1 ? data.result : [...prevProducts, ...data.result]))
-      setHasMore(data.pages > currentPage)
-      setTotal(data.total)
-      setPage(currentPage + 1)
-    } catch (error) {
-      console.error('Error fetching products:', error)
-      setHasMore(false)
-    } finally {
-      setLoading(false)
-      fetchLock.current = false
-    }
-  }, [query])
+        setProducts((prevProducts) => (currentPage === 1 ? data.result : [...prevProducts, ...data.result]))
+        setHasMore(data.pages > currentPage)
+        setTotal(data.total)
+        setPage(currentPage + 1)
+      } catch (error) {
+        console.error('Error fetching products:', error)
+        setHasMore(false)
+      } finally {
+        setLoading(false)
+        fetchLock.current = false
+      }
+    },
+    [query]
+  )
 
   useEffect(() => {
     // Reset states when the query changes
@@ -46,7 +53,10 @@ const SearchResults = () => {
     setPage(1)
     setHasMore(true)
 
-    if (query) fetchProducts(1)
+    if (query) {
+      fetchProducts(1)
+      window.scrollTo(0, 0)
+    }
   }, [fetchProducts, query])
 
   const observerRef = useInfiniteScroll(
