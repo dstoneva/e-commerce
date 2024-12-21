@@ -17,6 +17,7 @@ const FavouritesView = lazy(() => import('views/Favourites'))
 const SearchResultsView = lazy(() => import('views/SearchResults'))
 
 export const PageURLs = {
+  Home: '/',
   Login: '/login',
   NotFound: '/404',
   Register: '/register',
@@ -45,7 +46,7 @@ const RoutesComponent = () => {
     >
       <Routes>
         <Route
-          path="/"
+          path={PageURLs.Home}
           element={
             <PrivateRoute>
               <MainLayout isSuspense={false} />

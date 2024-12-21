@@ -2,21 +2,16 @@ import { Close, ShoppingBag } from '@mui/icons-material'
 import { Avatar, Badge, Box, Button, Divider, Drawer, IconButton, Typography } from '@mui/material'
 import { DisplayCurrency, ProductCard, ConfirmationDialog } from 'components'
 import { useCart } from 'core'
-import { Fragment, useState, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Fragment, useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { PageURLs } from 'Routes'
 
 const CartButton = () => {
   const { cart, totalPrice, quantity, resetCart } = useCart()
   const navigate = useNavigate()
+  const location = useLocation()
   const [isOpen, setIsOpen] = useState(false)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
-
-  const openDrawer = useCallback(() => setIsOpen(true), [])
-  const closeDrawer = useCallback((event) => {
-    if (event?.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return
-    setIsOpen(false)
-  }, [])
 
   const handleEmptyCartClick = (event) => {
     event.stopPropagation()
@@ -26,12 +21,27 @@ const CartButton = () => {
   const handleConfirmEmptyCart = () => {
     resetCart()
     setConfirmDialogOpen(false)
+  }
+
+  const toggleDrawer = () => {
+    setIsOpen((prev) => !prev)
+  }
+
+  useEffect(() => {
     setIsOpen(false)
+  }, [location.pathname])
+
+  const handleNavigation = (path) => {
+    if (path === location.pathname) {
+      setIsOpen(false)
+      return
+    }
+    navigate(path)
   }
 
   return (
     <div>
-      <IconButton sx={{ p: 0 }} onClick={openDrawer}>
+      <IconButton sx={{ p: 0 }} onClick={toggleDrawer}>
         <Badge badgeContent={quantity} color="primary">
           <Avatar>
             <ShoppingBag />
@@ -42,7 +52,7 @@ const CartButton = () => {
       <Drawer
         anchor="right"
         open={isOpen}
-        onClose={closeDrawer}
+        onClose={toggleDrawer}
         PaperProps={{
           sx: {
             display: 'flex',
@@ -52,7 +62,7 @@ const CartButton = () => {
           },
         }}
       >
-        <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={closeDrawer}>
+        <IconButton size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={toggleDrawer}>
           <Close />
         </IconButton>
         <Box display="flex" alignItems="center" height={60} p={2}>
@@ -81,10 +91,7 @@ const CartButton = () => {
             variant="contained"
             fullWidth
             sx={{ mb: 1 }}
-            onClick={(event) => {
-              setIsOpen(false)
-              setTimeout(() => navigate(PageURLs.Checkout), 200)
-            }}
+            onClick={() => handleNavigation(PageURLs.Checkout)}
           >
             Checkout (<DisplayCurrency number={totalPrice} />)
           </Button>
@@ -94,11 +101,7 @@ const CartButton = () => {
             variant="outlined"
             fullWidth
             sx={{ mb: 1 }}
-            onClick={(event) => {
-              event.stopPropagation()
-              setIsOpen(false)
-              setTimeout(() => navigate(PageURLs.Cart), 200)
-            }}
+            onClick={() => handleNavigation(PageURLs.Cart)}
           >
             View cart
           </Button>

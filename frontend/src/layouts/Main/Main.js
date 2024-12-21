@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Box } from '@mui/material'
 import { ErrorBoundary } from 'components'
-import { Outlet } from 'react-router-dom/dist'
+import { Outlet, useLocation, matchPath } from 'react-router-dom'
 import { LoadingOverlay, NavigationBar, TopInfoBar, Footer } from './components'
+import { PageURLs } from 'Routes'
 
 const Main = ({ isSuspense }) => {
   const [showContent, setShowContent] = useState(false)
+  const location = useLocation()
 
   useEffect(() => {
     if (!isSuspense) {
@@ -15,6 +17,9 @@ const Main = ({ isSuspense }) => {
       setShowContent(false)
     }
   }, [isSuspense])
+
+  const footerPaths = [PageURLs.Home, PageURLs.ProductDetails]
+  const withFooter = footerPaths.some((path) => matchPath(path, location.pathname))
 
   return (
     <ErrorBoundary>
@@ -46,7 +51,7 @@ const Main = ({ isSuspense }) => {
         </Box>
 
         {/* Footer */}
-        <Footer />
+        {withFooter && <Footer />}
 
         {/* Full-page loading spinner overlay */}
         {isSuspense && <LoadingOverlay />}

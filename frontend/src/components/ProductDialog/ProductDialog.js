@@ -3,8 +3,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import useSWR from 'swr'
 import { QuickView } from './components'
 
-export default function ProductDialog({ isDialogOpened, handleCloseDialog, productId }) {
-  // Use `useSWR` with conditional fetching
+export default function ProductDialog({ isDialogOpened, handleCloseDialog, productId, thumbnail }) {
   const {
     data: product,
     error,
@@ -14,6 +13,7 @@ export default function ProductDialog({ isDialogOpened, handleCloseDialog, produ
   const handleClose = () => {
     handleCloseDialog(false)
   }
+
 
   return (
     <Dialog maxWidth="md" open={isDialogOpened} onClose={handleClose} aria-labelledby="max-width-dialog-title">
@@ -53,7 +53,7 @@ export default function ProductDialog({ isDialogOpened, handleCloseDialog, produ
             <Typography color="error">Failed to load product data</Typography>
           </Box>
         )}
-        {product && <QuickView product={product} />}
+        {product && <QuickView product={product} thumbnail={thumbnail} />}
       </DialogContent>
     </Dialog>
   )
