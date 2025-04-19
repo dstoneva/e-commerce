@@ -1,5 +1,4 @@
-import { Box, Avatar, Typography, Rating, Tooltip } from '@mui/material'
-import { formatDistanceToNow } from 'date-fns'
+import { Box, Avatar, Typography, Rating } from '@mui/material'
 
 const Review = ({ review }) => {
   return (
@@ -21,11 +20,7 @@ const Review = ({ review }) => {
             <Typography fontWeight={600} fontSize={14} color="primary">
               {review.rating}
             </Typography>
-            <Tooltip title={review.date} placement="top" arrow>
-              <Typography fontSize={14} color="text.secondary" sx={{ cursor: 'pointer' }}>
-                {formatDistanceToNow(new Date(review.date), { addSuffix: true })}
-              </Typography>
-            </Tooltip>
+            <Typography>{review.date}</Typography>
           </Box>
         </Box>
       </Box>
